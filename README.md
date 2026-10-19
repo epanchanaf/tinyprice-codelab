@@ -2,6 +2,10 @@
 
 Experiencia local, autocontenida y sin proceso de compilación para reproducir la app TinyPrice con Android, TinyFish Search y Supabase Edge Functions alojadas. Incluye la instalación y activación de la skill oficial `android-cli` para Codex y Gemini CLI.
 
+## Versión pública
+
+[Abrir el codelab en GitHub Pages](https://epanchanaf.github.io/tinyprice-codelab/). Se publica desde la raíz de la rama `main` de este repositorio.
+
 ## Abrir
 
 Desde esta carpeta ejecuta un servidor estático:
