@@ -1,0 +1,1885 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Codelab paso a paso para crear TinyPrice con Android, Jetpack Compose, TinyFish y Supabase Edge Functions.">
+  <meta name="theme-color" content="#ffffff">
+  <title>TinyPrice Codelab · Android + TinyFish + Supabase</title>
+  <link rel="stylesheet" href="styles.css?v=20261019">
+</head>
+<body>
+  <a class="skip-link" href="#lesson-content">Saltar al contenido</a>
+
+  <header class="topbar">
+    <button class="icon-button menu-button" id="menuButton" aria-label="Abrir temario" aria-expanded="false" aria-controls="lessonNav">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="#step-0" data-step-link="0" aria-label="Ir al inicio del codelab">
+      <span class="brand-mark" aria-hidden="true">◒</span>
+      <span>
+        <strong>TinyPrice</strong>
+        <small>Codelab</small>
+      </span>
+    </a>
+    <div class="topbar-title">Crea un comparador de ofertas con búsqueda web real</div>
+    <div class="topbar-actions">
+      <span class="duration" title="Duración estimada">⏱ 2 h 50 min</span>
+      <button class="icon-button" id="themeButton" aria-label="Cambiar tema" title="Cambiar tema">◐</button>
+    </div>
+  </header>
+
+  <div class="progress-track" aria-hidden="true"><div class="progress-value" id="progressValue"></div></div>
+
+  <div class="app-shell">
+    <aside class="lesson-nav" id="lessonNav" aria-label="Pasos del codelab">
+      <div class="nav-summary">
+        <p class="eyebrow">TU PROGRESO</p>
+        <div class="progress-copy"><strong id="progressLabel">Paso 1 de 16</strong><span id="progressPercent">0%</span></div>
+      </div>
+
+      <nav>
+        <ol class="step-list">
+          <li><a class="step-link active" href="#step-0" data-step-link="0"><span class="step-number">1</span><span><small>Inicio</small>Antes de comenzar</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-1" data-step-link="1"><span class="step-number">2</span><span><small>Mapa</small>Arquitectura y recorrido</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-2" data-step-link="2"><span class="step-number tinyfish">3</span><span><small>TinyFish</small>Cuenta, créditos y clave</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-3" data-step-link="3"><span class="step-number tinyfish">4</span><span><small>TinyFish</small>Búsqueda web</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-4" data-step-link="4"><span class="step-number android">5</span><span><small>Android</small>Entorno y skill</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-5" data-step-link="5"><span class="step-number android">6</span><span><small>Android</small>Configurar el proyecto</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-6" data-step-link="6"><span class="step-number android">7</span><span><small>Android</small>Modelo y repositorios</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-7" data-step-link="7"><span class="step-number android">8</span><span><small>Android</small>Estado y ViewModel</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-8" data-step-link="8"><span class="step-number android">9</span><span><small>Android</small>Interfaz con Compose</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-9" data-step-link="9"><span class="step-number supabase">10</span><span><small>Supabase</small>Crear cuenta por correo</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-10" data-step-link="10"><span class="step-number supabase">11</span><span><small>Supabase</small>Proyecto en la nube</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-11" data-step-link="11"><span class="step-number supabase">12</span><span><small>Supabase</small>Edge Function</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-12" data-step-link="12"><span class="step-number supabase">13</span><span><small>Supabase</small>Secreto y despliegue</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-13" data-step-link="13"><span class="step-number android">14</span><span><small>Integración</small>Conectar Android</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-14" data-step-link="14"><span class="step-number verify">15</span><span><small>Calidad</small>Probar y diagnosticar</span><i>✓</i></a></li>
+          <li><a class="step-link" href="#step-15" data-step-link="15"><span class="step-number finish">16</span><span><small>Final</small>Publicar y continuar</span><i>✓</i></a></li>
+        </ol>
+      </nav>
+
+      <div class="legend" aria-label="Leyenda de bloques">
+        <p class="eyebrow">BLOQUES</p>
+        <span><b class="dot android"></b>Android</span>
+        <span><b class="dot tinyfish"></b>TinyFish</span>
+        <span><b class="dot supabase"></b>Supabase Cloud</span>
+      </div>
+    </aside>
+
+    <button class="nav-scrim" id="navScrim" aria-label="Cerrar temario"></button>
+
+    <main class="lesson" id="lesson-content" tabindex="-1">
+      <article class="lesson-page active" id="step-0" data-step="0" data-title="Antes de comenzar">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="track-badge intro">CODELAB · 5.º NIVEL DE CARRERA</span>
+            <h1>Crea TinyPrice: ofertas web en una app Android</h1>
+            <p class="lead">Construye, desde cero, una app con Jetpack Compose que busca productos en la web mediante TinyFish y protege la clave de acceso detrás de una Edge Function desplegada en Supabase Cloud.</p>
+            <div class="hero-meta">
+              <span>⏱ 2 h 50 min</span><span>▦ 16 pasos</span><span>⌁ Kotlin + TypeScript</span>
+            </div>
+          </div>
+          <div class="phone-preview" aria-label="Vista previa ilustrada de TinyPrice">
+            <div class="phone-camera"></div>
+            <div class="mini-appbar"><b>◒</b><span><strong>TinyPrice</strong><small>Búsqueda web inteligente</small></span></div>
+            <div class="mini-search">⌕ Nintendo Switch OLED <b>Buscar</b></div>
+            <div class="mini-hero"><small>DEMO · OFERTAS</small><strong>Encuentra la mejor compra.</strong><span>Compara fuentes sin abrir diez pestañas.</span></div>
+            <div class="mini-card"><span>Pixel Store</span><b>$329</b><strong>Nintendo Switch OLED</strong><small>Envío gratis · ★ 4.8</small></div>
+          </div>
+        </div>
+
+        <section>
+          <h2>Lo que vas a construir</h2>
+          <p>TinyPrice recibe una consulta, muestra un estado de carga, presenta hasta diez resultados y conserva el enlace de cada fuente. El usuario puede abrir un resultado, revisar sus detalles y saltar al sitio original.</p>
+          <p>Trabajarás en tres lugares distintos. En el navegador crearás las cuentas y configurarás los servicios alojados. En Android Studio escribirás la aplicación Kotlin y la ejecutarás en un emulador. En la terminal, situada en la carpeta del proyecto, compilarás la app y desplegarás la función de Supabase. El codelab es la guía: los comandos no se ejecutan dentro de esta página.</p>
+          <div class="feature-grid">
+            <div class="feature-card"><span>⌕</span><h3>Búsqueda real</h3><p>TinyFish devuelve títulos, fragmentos y URLs actuales.</p></div>
+            <div class="feature-card"><span>◫</span><h3>UI declarativa</h3><p>Compose representa inicio, carga, resultados, error y detalle.</p></div>
+            <div class="feature-card"><span>◇</span><h3>Secreto protegido</h3><p>La clave de TinyFish vive en Supabase, nunca dentro del APK.</p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Ruta del laboratorio</h2>
+          <p>Los bloques están ordenados según las dependencias de la práctica. Cada uno deja preparado algo que utilizarás más adelante; por eso conviene comprobar el resultado antes de continuar.</p>
+          <ol class="learning-route">
+            <li><b>TinyFish, pasos 3–4.</b> Crea la cuenta con el enlace de referido, obtiene una API key y comprueba qué tipo de respuesta ofrece Search. Guarda la clave en un gestor de contraseñas.</li>
+            <li><b>Android, pasos 5–9.</b> Construye la interfaz y el flujo de búsqueda con datos ficticios. Así puedes probar pantallas y navegación sin depender todavía de un servidor.</li>
+            <li><b>Supabase Cloud, pasos 10–13.</b> Crea un proyecto alojado, implementa la función y guarda allí la clave de TinyFish. La función será el intermediario entre la app y Search.</li>
+            <li><b>Integración y calidad, pasos 14–16.</b> Cambia la app a datos remotos, prueba el recorrido completo y revisa cómo diagnosticar errores.</li>
+          </ol>
+          <aside class="callout info"><b>Qué significa “raíz del proyecto”</b><p>Es la carpeta <code>IATinyFish/</code>, donde están <code>gradlew</code>, <code>app/</code> y, más adelante, <code>supabase/</code>. Cuando el codelab diga “desde la raíz”, abre una terminal en esa carpeta antes de ejecutar el comando.</p></aside>
+        </section>
+
+        <section>
+          <h2>Cuatro términos que usarás durante el laboratorio</h2>
+          <p>Una <b>API</b> es una forma acordada de pedir datos a otro servicio. La <b>API key</b> identifica a quien hace la petición; por eso la de TinyFish es privada y se guarda en Supabase, no en la app. Una <b>Edge Function</b> es código que se ejecuta en los servidores de Supabase cuando recibe una solicitud. El <b>APK</b> es el archivo instalable de Android: cualquier persona podría inspeccionarlo, así que no debe contener secretos.</p>
+          <p>También verás la palabra <b>repositorio</b>: aquí significa la pieza de Kotlin que obtiene ofertas para la interfaz. Primero devolverá datos de demostración y después consultará la función remota. Este cambio te permitirá distinguir un problema de pantalla de un problema de red.</p>
+        </section>
+
+        <section>
+          <h2>Objetivos de aprendizaje</h2>
+          <ul class="check-list">
+            <li>Modelar un flujo unidireccional de estado con <code>StateFlow</code> y eventos.</li>
+            <li>Separar UI, estado y acceso a datos mediante un repositorio.</li>
+            <li>Ejecutar red fuera del hilo principal con corrutinas.</li>
+            <li>Instalar la skill oficial <code>android-cli</code> en el proyecto y activarla de forma segura desde Gemini CLI.</li>
+            <li>Consumir la API Search de TinyFish sin filtrar la clave al cliente.</li>
+            <li>Crear, configurar y desplegar una Edge Function en Supabase Cloud.</li>
+            <li>Validar el recorrido completo y reconocer fallos por capa.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Qué necesitas</h2>
+          <div class="requirements">
+            <div><b>Android Studio</b><span>Versión compatible con AGP 9.4.1 y SDK 37.</span></div>
+            <div><b>JDK 17 o superior</b><span>AGP 9.4 necesita JDK 17 para ejecutarse; el código de la app se compila para Java 11.</span></div>
+            <div><b>Cuenta de TinyFish</b><span>Para generar una clave de API.</span></div>
+            <div><b>Cuenta de Supabase</b><span>Para alojar la función global.</span></div>
+            <div><b>Node.js + Supabase CLI</b><span>Para enlazar y desplegar desde terminal.</span></div>
+            <div><b>Gemini CLI (opcional)</b><span>Para seguir la práctica de descubrimiento y activación de la skill.</span></div>
+            <div><b>Emulador o dispositivo</b><span>Android 16/API 36 o posterior, según este proyecto.</span></div>
+          </div>
+          <aside class="callout note"><b>Nota sobre las versiones</b><p>Este codelab reproduce la instantánea del proyecto: Kotlin 2.2.10, Android Gradle Plugin 9.4.1, Compose BOM 2026.02.01, <code>compileSdk 37</code> y <code>minSdk 36</code>. Si trabajas con otra versión, conserva un conjunto compatible en lugar de actualizar dependencias de forma aislada.</p></aside>
+        </section>
+
+        <section>
+          <h2>Cómo usar este codelab</h2>
+          <p>Cada paso indica el lugar donde debes trabajar y termina con un resultado observable. Un bloque de código con nombre de archivo se copia en ese archivo dentro del proyecto; un bloque de terminal se ejecuta en una terminal de tu computadora. Los ejemplos con <code>YOUR_...</code> contienen valores que debes sustituir por los de tu propio proyecto.</p>
+          <ol>
+            <li>Avanza con <b>Siguiente</b> o selecciona un paso en el panel izquierdo.</li>
+            <li>Usa <b>Copiar</b> en los bloques de código y reemplaza solamente los valores escritos como <code>YOUR_...</code>.</li>
+            <li>Detente en cada tarjeta <b>Checkpoint</b>. No avances hasta obtener el resultado esperado.</li>
+            <li>Tu posición y los pasos completados quedan guardados en este navegador.</li>
+          </ol>
+          <aside class="callout warning"><b>Seguridad</b><p>Nunca pegues <code>TINYFISH_API_KEY</code> en Kotlin, <code>local.properties</code> que vayas a compartir, un repositorio público o el cuerpo de una respuesta. Solo se configura como secreto de Supabase.</p></aside>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-1" data-step="1" data-title="Arquitectura y recorrido">
+        <span class="track-badge intro">MAPA DEL SISTEMA</span>
+        <h1>Arquitectura y recorrido de una búsqueda</h1>
+        <p class="lead">Antes de escribir código, ubica cada responsabilidad. El diseño evita que Android conozca la clave de TinyFish y permite reemplazar los datos de demostración por resultados reales sin cambiar la UI.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Lee este paso en el codelab y dibuja el recorrido en tus apuntes si te ayuda. Todavía no necesitas abrir Android Studio, registrarte ni ejecutar comandos.</p></div>
+
+        <section>
+          <h2>Las tres piezas</h2>
+          <p>Piensa en una búsqueda escrita por una persona. La app recibe el texto, Supabase lo envía al proveedor usando una clave privada y TinyFish devuelve enlaces de páginas web. Supabase convierte esa respuesta a un formato sencillo antes de devolverla al teléfono. Así cada componente tiene una responsabilidad que podrás comprobar por separado.</p>
+          <div class="architecture" role="img" aria-label="Android llama a Supabase Edge Function y Supabase llama a TinyFish Search">
+            <div class="arch-node android-node"><span>1</span><b>Android</b><small>Compose · ViewModel · Repository</small></div>
+            <div class="arch-arrow"><b>POST</b><span>query</span>→</div>
+            <div class="arch-node supabase-node"><span>2</span><b>Supabase Cloud</b><small>Validación · secreto · transformación</small></div>
+            <div class="arch-arrow"><b>GET</b><span>X-API-Key</span>→</div>
+            <div class="arch-node tinyfish-node"><span>3</span><b>TinyFish Search</b><small>Resultados web estructurados</small></div>
+          </div>
+          <div class="return-flow">← <b>La respuesta vuelve como</b> <code>{ "offers": [...] }</code> ←</div>
+        </section>
+
+        <section>
+          <h2>Contrato de entrada y salida</h2>
+          <p>Android envía una consulta sencilla. La función valida el texto, consulta TinyFish y adapta cada resultado al modelo que la app ya entiende.</p>
+          <p>En la solicitud solo viaja <code>query</code>, que es lo que escribió el usuario. La respuesta contiene <code>offers</code>, una lista de elementos que Android puede mostrar. El campo <code>sourceUrl</code> permite comprobar el origen de cada resultado. Observa que ninguno de estos ejemplos contiene la API key: la función la lee desde Supabase, no desde la app.</p>
+          <div class="split-code">
+            <div><h3>Solicitud</h3><pre><code class="language-json">{
+  "query": "Nintendo Switch OLED"
+}</code></pre></div>
+            <div><h3>Respuesta</h3><pre><code class="language-json">{
+  "query": "Nintendo Switch OLED",
+  "offers": [
+    {
+      "id": "1-https://tienda.example/...",
+      "store": "Tienda",
+      "productName": "Nintendo Switch OLED",
+      "price": "Ver en fuente",
+      "sourceUrl": "https://...",
+      "summary": "Fragmento del resultado",
+      "tags": ["Resultado web"]
+    }
+  ],
+  "searchedAt": "2026-10-15T15:00:00.000Z"
+}</code></pre></div>
+          </div>
+          <aside class="callout info"><b>Por qué el precio puede decir “Ver en fuente”</b><p>TinyFish Search devuelve descubrimiento web —título, URL, fragmento y metadatos—, no garantiza un campo de precio normalizado. TinyPrice conserva la fuente y evita inventar datos que el proveedor no entregó.</p></aside>
+        </section>
+
+        <section>
+          <h2>Flujo dentro de Android</h2>
+          <ol class="flow-list">
+            <li><span>1</span><div><b>Evento</b><p>La UI emite <code>SubmitSearch</code>.</p></div></li>
+            <li><span>2</span><div><b>Estado</b><p>El ViewModel activa <code>isLoading</code>.</p></div></li>
+            <li><span>3</span><div><b>Datos</b><p>El repositorio hace la llamada en <code>Dispatchers.IO</code>.</p></div></li>
+            <li><span>4</span><div><b>Render</b><p>Compose se recompone con ofertas o con un mensaje de error.</p></div></li>
+            <li><span>5</span><div><b>Detalle</b><p>Seleccionar una tarjeta cambia <code>selectedOffer</code>.</p></div></li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Estrategia por etapas</h2>
+          <p>Primero prepararemos el acceso a TinyFish y guardaremos su clave fuera del proyecto. Después construiremos Android con datos locales; luego crearemos el servicio en la nube y, solo cuando el endpoint responda bien, activaremos el repositorio remoto. Esta secuencia reduce la superficie de diagnóstico.</p>
+          <p>Al terminar la demo de Android verás productos de ejemplo. Eso es correcto en esa etapa: demuestra que la interfaz y el estado funcionan. Los resultados web aparecerán solo después de desplegar Supabase y activar la configuración remota de la app.</p>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint conceptual</b><p>La app Android nunca llama directamente a TinyFish. Durante el bloque Android usará datos de demostración; solo Supabase leerá <code>TINYFISH_API_KEY</code> cuando lleguemos a ese bloque.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-2" data-step="2" data-title="Entorno y skill de Android">
+        <span class="track-badge android">BLOQUE ANDROID · 1 DE 5</span>
+        <h1>Preparar el entorno y la skill de Android</h1>
+        <p class="lead">La API key de TinyFish continúa guardada fuera del proyecto y todavía no se usará. Ahora crea o abre el proyecto base, verifica las herramientas e instala la skill oficial <code>android-cli</code>. En los pasos siguientes construirás la app con datos de demostración.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Abre Android Studio para revisar el SDK y crear un emulador. Abre una terminal en la carpeta <code>IATinyFish/</code> para ejecutar los comandos. La parte de Gemini CLI es una actividad de apoyo: la aplicación Android no necesita Gemini para funcionar.</p></div>
+
+        <section>
+          <h2>1. Instala los componentes</h2>
+          <p>En Android Studio abre <b>Settings → Languages &amp; Frameworks → Android SDK</b> e instala:</p>
+          <ul>
+            <li>Android SDK Platform 37.</li>
+            <li>Android SDK Build-Tools correspondiente.</li>
+            <li>Android SDK Platform-Tools.</li>
+            <li>Android Emulator y una imagen API 36 o superior.</li>
+          </ul>
+          <aside class="callout note"><b>Si solo tienes SDK 36</b><p>Puedes bajar temporalmente <code>compileSdk</code> y <code>targetSdk</code> al nivel disponible, siempre que el AGP instalado lo soporte. Para una reproducción exacta usa los valores del proyecto.</p></aside>
+          <h3>Abre o crea la carpeta de trabajo</h3>
+          <p>Si descargaste este repositorio, abre <code>IATinyFish/</code> en Android Studio; ya contiene un proyecto Android y el archivo <code>gradlew</code>. Si estás reproduciendo el codelab desde cero, elige <b>New Project → Empty Activity</b>, escribe <code>IATinyFish</code> como nombre y <code>com.apps.iatinyfish</code> como paquete, selecciona Kotlin y API 36 como mínimo, y espera la primera sincronización. Android Studio creará la carpeta <code>IATinyFish/</code> y el archivo <code>gradlew</code>. Trabaja siempre en esa misma carpeta durante los pasos siguientes.</p>
+        </section>
+
+        <section>
+          <h2>2. Comprueba Java y Gradle</h2>
+          <p>Desde la raíz del proyecto ejecuta:</p>
+          <p>La terminal puede ser la integrada en Android Studio o la de tu sistema operativo. Antes de ejecutar, confirma que estás dentro de <code>IATinyFish/</code>: allí debe encontrarse el archivo <code>gradlew</code>. Si no aparece, cambia a la carpeta correcta.</p>
+          <pre><code class="language-shell">java -version
+./gradlew --version</code></pre>
+          <p>El primer comando debe mostrar JDK 17 o superior. AGP 9.4 lo necesita para ejecutar la compilación, aunque el código de la app genere bytecode compatible con Java 11. El segundo comando muestra la versión del Gradle Wrapper de esa carpeta; al usar el proyecto de referencia descargará Gradle 9.6.0 si hace falta. Si creaste un proyecto vacío, Android Studio pudo generar otra versión: en el siguiente paso ajustarás el Wrapper para reproducir la referencia.</p>
+          <aside class="callout warning"><b>No compartas <code>local.properties</code></b><p>Ese archivo contiene la ruta del SDK de tu computadora. Android Studio lo genera para cada persona y debe permanecer fuera del control de versiones.</p></aside>
+        </section>
+
+        <section>
+          <h2>3. Comprende qué aporta una Agent Skill</h2>
+          <p>Una skill no es una dependencia de la app ni se incluye en el APK. Es un paquete de instrucciones para el agente: su archivo <code>SKILL.md</code> describe cuándo debe activarse y cómo utilizar herramientas, mientras <code>references/</code> conserva procedimientos especializados.</p>
+          <p>Por ejemplo, podrías pedirle a Gemini que compruebe si hay un emulador disponible. La skill le indica qué comandos de Android CLI son pertinentes y cómo interpretar el resultado. Tú sigues revisando lo que propone y decides si ejecutas una instalación o un cambio en tu equipo.</p>
+          <div class="requirements skill-capabilities">
+            <div><b>SDK y proyectos</b><span>Instalar plataformas, consultar el entorno y crear proyectos desde plantillas.</span></div>
+            <div><b>Emuladores</b><span>Crear, iniciar, detener y listar dispositivos virtuales.</span></div>
+            <div><b>Ejecución</b><span>Compilar, instalar y abrir una app en un dispositivo seleccionado.</span></div>
+            <div><b>Inspección</b><span>Obtener capturas y el árbol accesible de la interfaz para comprobar recorridos.</span></div>
+            <div><b>Documentación</b><span>Buscar contenido Android autoritativo desde la base de conocimiento del CLI.</span></div>
+            <div><b>Más skills</b><span>Descubrir, agregar y actualizar otras skills oficiales de Android.</span></div>
+          </div>
+          <aside class="callout info"><b>Activación progresiva</b><p>Gemini conoce primero el nombre y la descripción. Solo carga el cuerpo completo de <code>SKILL.md</code> cuando la petición coincide con su propósito y el usuario aprueba la activación.</p></aside>
+        </section>
+
+        <section>
+          <h2>4. Instala Android CLI</h2>
+          <p>Elige el instalador correspondiente a tu sistema. Revisa siempre que la URL pertenezca a <code>dl.google.com</code>.</p>
+          <table>
+            <thead><tr><th>Sistema</th><th>Comando oficial</th></tr></thead>
+            <tbody>
+              <tr><td>macOS · Apple Silicon</td><td><code>curl -fsSL https://dl.google.com/android/cli/latest/darwin_arm64/install.sh | bash</code></td></tr>
+              <tr><td>macOS · Intel</td><td><code>curl -fsSL https://dl.google.com/android/cli/latest/darwin_x86_64/install.sh | bash</code></td></tr>
+              <tr><td>Linux · x86_64</td><td><code>curl -fsSL https://dl.google.com/android/cli/latest/linux_x86_64/install.sh | bash</code></td></tr>
+              <tr><td>Windows</td><td><code>curl -fsSL https://dl.google.com/android/cli/latest/windows_x86_64/install.cmd -o "%TEMP%\i.cmd" &amp;&amp; "%TEMP%\i.cmd"</code></td></tr>
+            </tbody>
+          </table>
+          <p>Cierra y vuelve a abrir la terminal si el instalador modificó el <code>PATH</code>. Luego comprueba:</p>
+          <pre><code class="language-shell">android --version
+android info</code></pre>
+          <aside class="callout warning"><b>El CLI no reemplaza Android Studio</b><p>Android CLI automatiza SDK, proyectos, dispositivos, documentación y pruebas, pero sigue utilizando el SDK y las herramientas Android instaladas en la computadora.</p></aside>
+        </section>
+
+        <section>
+          <h2>5. Instala <code>android-cli</code> dentro del proyecto</h2>
+          <p>Desde la raíz de <code>IATinyFish</code> ejecuta:</p>
+          <pre><code class="language-shell">android skills add --project=.</code></pre>
+          <p>Al omitir un nombre y <code>--all</code>, Android CLI instala la skill base <code>android-cli</code>. La instalación de este proyecto debe producir:</p>
+          <pre><code class="language-text">IATinyFish/
+├── .agents/skills/android-cli/
+│   ├── SKILL.md
+│   └── references/
+│       ├── interact.md
+│       └── journeys.md
+└── skills-lock.json</code></pre>
+          <ul class="check-list">
+            <li><code>.agents/skills/android-cli/SKILL.md</code> contiene instrucciones y metadatos de Google.</li>
+            <li><code>skills-lock.json</code> registra el origen <code>android/skills</code>, la ruta de la skill y su hash.</li>
+            <li>La carpeta puede versionarse para que todos los participantes utilicen el mismo procedimiento.</li>
+          </ul>
+          <aside class="callout note"><b>Este repositorio ya la incluye</b><p>Si descargaste el proyecto completo y ambos archivos existen, no vuelvas a instalarla. Revisa el contenido y pasa directamente a la verificación con Gemini.</p></aside>
+        </section>
+
+        <section>
+          <h2>6. Activa y verifica la skill en Gemini CLI</h2>
+          <p>Gemini CLI descubre skills del workspace en <code>.gemini/skills</code> y también acepta <code>.agents/skills</code> como alias compartido. Inicia Gemini desde la raíz del proyecto:</p>
+          <pre><code class="language-shell">gemini</code></pre>
+          <p>Dentro de la sesión interactiva ejecuta:</p>
+          <pre><code class="language-text">/trust
+/skills reload
+/skills list</code></pre>
+          <ol>
+            <li>Usa <code>/trust</code> solamente después de revisar el proyecto; las skills del workspace requieren una carpeta confiable.</li>
+            <li>Si Gemini solicita reiniciar después de confiar en la carpeta, cierra la sesión, vuelve a ejecutar <code>gemini</code> y continúa.</li>
+            <li><code>/skills reload</code> vuelve a escanear las skills después de instalar o modificar archivos.</li>
+            <li><code>/skills list</code> debe mostrar <code>android-cli</code> y su descripción.</li>
+            <li>Cuando Gemini proponga activar la skill, revisa la solicitud y acepta únicamente si corresponde a la tarea.</li>
+          </ol>
+          <p>Prueba la activación con una petición concreta:</p>
+          <pre><code class="language-text">Usa la skill android-cli para comprobar el entorno Android de este proyecto,
+listar los emuladores disponibles y explicar cualquier componente faltante.
+No instales ni elimines componentes sin pedirme autorización.</code></pre>
+          <aside class="callout danger"><b>No dupliques la misma skill</b><p>Si ya existe en <code>.agents/skills</code>, no copies otra versión con el mismo nombre en <code>.gemini/skills</code>. Dos copias pueden generar conflictos de precedencia y hacer que Gemini active una versión distinta de la esperada.</p></aside>
+        </section>
+
+        <section>
+          <h2>7. Actualiza o audita la instalación</h2>
+          <pre><code class="language-shell">android skills update android-cli
+gemini skills list</code></pre>
+          <p>Antes de actualizar, revisa los cambios de <code>SKILL.md</code>, referencias y hash. No aceptes instrucciones para revelar secretos, modificar archivos ajenos al proyecto o ejecutar comandos destructivos.</p>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint de la skill</b><p><code>android --version</code> responde, existe <code>.agents/skills/android-cli/SKILL.md</code> y Gemini muestra <code>android-cli</code> en <code>/skills list</code>.</p></div></div>
+        </section>
+
+        <section>
+          <h2>8. Crea un emulador</h2>
+          <ol>
+            <li>Abre <b>Tools → Device Manager</b>.</li>
+            <li>Selecciona <b>Create virtual device</b> y un perfil de teléfono.</li>
+            <li>Elige una imagen API 36 o posterior.</li>
+            <li>Finaliza, inicia el dispositivo y espera a ver la pantalla de inicio.</li>
+          </ol>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p><code>./gradlew --version</code> termina sin error y el emulador aparece encendido en Device Manager.</p></div></div>
+        </section>
+
+        <section>
+          <h2>9. Estructura que construiremos</h2>
+          <pre><code class="language-text">IATinyFish/
+├── app/
+│   └── src/main/java/com/apps/iatinyfish/
+│       ├── MainActivity.kt
+│       ├── data/
+│       │   ├── model/ProductOffer.kt
+│       │   ├── remote/
+│       │   │   ├── SearchProductsDto.kt
+│       │   │   ├── TinyPriceApi.kt
+│       │   │   └── TinyPriceApiFactory.kt
+│       │   └── repository/
+│       │       ├── DealsRepository.kt
+│       │       └── RemoteDealsRepository.kt
+│       ├── presentation/deals/
+│       │   ├── DealsApp.kt
+│       │   └── DealsViewModel.kt
+│       └── ui/theme/
+└── supabase/
+    ├── config.toml
+    └── functions/search-products/index.ts</code></pre>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-3" data-step="3" data-title="Configurar el proyecto">
+        <span class="track-badge android">BLOQUE ANDROID · 2 DE 5</span>
+        <h1>Configurar el proyecto y las dependencias</h1>
+        <p class="lead">Con el proyecto base abierto desde el paso anterior, fija las dependencias y opciones que utilizará TinyPrice.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Haz la creación y edición de archivos en Android Studio. Usa el panel <b>Project</b> para localizar <code>gradle/libs.versions.toml</code>, <code>app/build.gradle.kts</code> y <code>app/src/main/AndroidManifest.xml</code>. Los fragmentos de este paso pertenecen a esos archivos; no van en la terminal.</p></div>
+
+        <section>
+          <h2>1. Comprueba el proyecto base</h2>
+          <p>En el panel <b>Project</b> deben existir <code>app/</code>, <code>gradle/</code> y <code>gradlew</code>. Abre <code>app/build.gradle.kts</code> y verifica que el paquete del módulo corresponde a <code>com.apps.iatinyfish</code>. Si comenzaste con una plantilla vacía, verás archivos generados por Android Studio; en este paso sustituirás los fragmentos indicados por los del laboratorio. Si abriste el repositorio, compara sus archivos con los ejemplos y conserva los que ya coincidan.</p>
+          <p>Si partiste de una plantilla nueva, abre <code>gradle/wrapper/gradle-wrapper.properties</code> y comprueba que su línea <code>distributionUrl</code> apunte a Gradle 9.6.0, versión requerida por AGP 9.4. En el repositorio de referencia ya está configurada:</p>
+          <pre data-file="gradle/wrapper/gradle-wrapper.properties"><code class="language-properties">distributionUrl=https\://services.gradle.org/distributions/gradle-9.6.0-bin.zip</code></pre>
+        </section>
+
+        <section>
+          <h2>2. Catálogo de versiones</h2>
+          <p>Gradle utiliza este catálogo para dar un nombre estable a cada librería y plugin. Cuando leas <code>libs.androidx.compose.material3</code> en el módulo <code>app</code>, su definición estará aquí. Copia el bloque completo al archivo indicado y espera a sincronizar hasta haber terminado también el módulo.</p>
+          <p>Reemplaza <code>gradle/libs.versions.toml</code> por este contenido:</p>
+          <pre data-file="gradle/libs.versions.toml"><code class="language-toml">[versions]
+agp = "9.4.1"
+coreKtx = "1.10.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+lifecycleRuntimeKtx = "2.6.1"
+activityCompose = "1.8.0"
+kotlin = "2.2.10"
+composeBom = "2026.02.01"
+retrofit = "3.0.0"
+coroutines = "1.10.2"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }</code></pre>
+        </section>
+
+        <section>
+          <h2>3. Configura el módulo app</h2>
+          <p>En <code>app/build.gradle.kts</code> preparamos dos propiedades: una activa los datos remotos y otra indica la base del endpoint. El valor por defecto conserva la demo local.</p>
+          <p>Estas propiedades forman un interruptor didáctico. Por ahora <code>useRemoteDeals</code> queda desactivado y la app usa ofertas ficticias; en la integración final lo activaremos con una opción de compilación. La URL con <code>YOUR_PROJECT_REF</code> es solo un marcador: todavía no existe tu proyecto de Supabase.</p>
+          <pre data-file="app/build.gradle.kts"><code class="language-kotlin">plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
+}
+
+val edgeRuntimeBaseUrl = providers.gradleProperty("edgeRuntimeBaseUrl")
+    .orElse("https://YOUR_PROJECT_REF.supabase.co/functions/v1")
+    .get()
+val useRemoteDeals = providers.gradleProperty("useRemoteDeals").orNull == "true"
+
+android {
+    namespace = "com.apps.iatinyfish"
+    compileSdk { version = release(37) }
+
+    defaultConfig {
+        applicationId = "com.apps.iatinyfish"
+        minSdk = 36
+        targetSdk = 37
+        versionCode = 1
+        versionName = "1.0"
+
+        buildConfigField("String", "EDGE_RUNTIME_BASE_URL", "\"$edgeRuntimeBaseUrl\"")
+        buildConfigField("boolean", "USE_REMOTE_DEALS", useRemoteDeals.toString())
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release { optimization { enable = false } }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+}
+
+dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+}</code></pre>
+          <aside class="callout info"><b>Por qué usamos Retrofit y Gson</b><p>Esta versión coincide con la app actual: Retrofit declara el contrato HTTP, Gson convierte JSON a DTO y OkHttp aplica los tiempos máximos. Separar contrato, transporte y mapeo reduce código manual y facilita sustituir la API en pruebas.</p></aside>
+          <aside class="callout note"><b>Compatibilidad del laboratorio</b><p><code>minSdk 36</code> reproduce exactamente la instantánea actual y requiere un emulador o dispositivo Android 16 o posterior. La app no depende de una API exclusiva de 36: para un taller con más dispositivos puedes bajar a API 24 o 26, volver a sincronizar y comprobar el comportamiento. Instala <code>compileSdk 37</code> desde SDK Manager; si aún no está disponible en tu entorno, usa un conjunto AGP/SDK compatible en todos los archivos, sin mezclar versiones.</p></aside>
+        </section>
+
+        <section>
+          <h2>4. Permiso de Internet</h2>
+          <p>Agrega el permiso antes de <code>&lt;application&gt;</code> en <code>AndroidManifest.xml</code>:</p>
+          <pre><code class="language-xml">&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+    &lt;application
+        android:theme="@style/Theme.IATinyFish"
+        android:label="TinyPrice"&gt;
+        &lt;!-- MainActivity se mantiene como actividad LAUNCHER. --&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;</code></pre>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>Sincroniza Gradle. Android Studio reconoce Material 3, Compose y <code>viewModelScope</code> sin referencias rojas.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-4" data-step="4" data-title="Modelo y repositorios">
+        <span class="track-badge android">BLOQUE ANDROID · 3 DE 5</span>
+        <h1>Crear el modelo y la capa de datos</h1>
+        <p class="lead">La UI dependerá de una interfaz, no de una fuente concreta. Empezaremos con datos de demostración y dejaremos preparado el cliente remoto.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Crea los archivos Kotlin en Android Studio, dentro de <code>app/src/main/java/com/apps/iatinyfish/</code>. Las rutas cortas que aparecen abajo, como <code>data/model/ProductOffer.kt</code>, se cuentan a partir de esa carpeta. Ejecuta la compilación final en una terminal situada en <code>IATinyFish/</code>.</p></div>
+
+        <section>
+          <h2>1. Define <code>ProductOffer</code></h2>
+          <p>Crea <code>data/model/ProductOffer.kt</code>. <code>@Immutable</code> comunica a Compose que sus propiedades no cambiarán internamente.</p>
+          <p>Este modelo reúne los datos que necesita una tarjeta: nombre, tienda, texto del precio y enlace de origen. La misma estructura servirá para la demo local y para los resultados que lleguen después desde Supabase. Así la pantalla no tendrá que saber quién produjo cada oferta.</p>
+          <pre data-file="ProductOffer.kt"><code class="language-kotlin">package com.apps.iatinyfish.data.model
+
+import androidx.compose.runtime.Immutable
+
+@Immutable
+data class ProductOffer(
+    val id: String,
+    val store: String,
+    val productName: String,
+    val price: String,
+    val originalPrice: String? = null,
+    val shipping: String,
+    val delivery: String,
+    val rating: String,
+    val sourceUrl: String,
+    val summary: String,
+    val tags: List&lt;String&gt;,
+    val isBestValue: Boolean = false,
+)</code></pre>
+        </section>
+
+        <section>
+          <h2>2. Crea el contrato y la demo</h2>
+          <p>Crea <code>data/repository/DealsRepository.kt</code>. La búsqueda local permite terminar la UI antes de depender de Internet.</p>
+          <p>La interfaz <code>DealsRepository</code> promete una operación <code>search</code>. <code>PreviewDealsRepository</code> cumple esa promesa con datos ficticios. Cuando implementes la versión remota, la pantalla seguirá llamando al mismo método; únicamente cambiará el objeto que responde.</p>
+          <pre data-file="DealsRepository.kt"><code class="language-kotlin">package com.apps.iatinyfish.data.repository
+
+import com.apps.iatinyfish.data.model.ProductOffer
+
+interface DealsRepository {
+    val isPreviewData: Boolean
+    suspend fun search(query: String): List&lt;ProductOffer&gt;
+}
+
+object PreviewDealsRepository : DealsRepository {
+    override val isPreviewData = true
+
+    private val offers = listOf(
+        ProductOffer(
+            id = "pixel-store",
+            store = "Pixel Store",
+            productName = "Nintendo Switch OLED · Blanca",
+            price = "\$329",
+            originalPrice = "\$349",
+            shipping = "Envío gratis",
+            delivery = "Llega en 2–4 días",
+            rating = "4.8",
+            sourceUrl = "tienda.ejemplo.com/switch-oled",
+            summary = "El precio más bajo de la búsqueda. Incluye consola, Joy-Con blancos y base OLED.",
+            tags = listOf("Mejor precio", "Verificada hoy"),
+            isBestValue = true,
+        ),
+        ProductOffer(
+            id = "game-hub",
+            store = "Game Hub",
+            productName = "Nintendo Switch OLED · Neon",
+            price = "\$339",
+            shipping = "Envío gratis",
+            delivery = "Disponible hoy",
+            rating = "4.7",
+            sourceUrl = "gamehub.ejemplo.com/switch-oled",
+            summary = "Disponible para entrega rápida. Incluye una tarjeta de regalo.",
+            tags = listOf("Entrega rápida", "Bonus incluido"),
+        ),
+    )
+
+    override suspend fun search(query: String): List&lt;ProductOffer&gt; {
+        if (query.isBlank()) return offers
+        val terms = query.lowercase().split(" ").filter(String::isNotBlank)
+        return offers.filter { offer -&gt;
+            val text = "${offer.store} ${offer.productName} ${offer.summary} ${offer.tags}".lowercase()
+            terms.any(text::contains)
+        }
+    }
+}</code></pre>
+          <aside class="callout note"><b>Datos explícitamente ficticios</b><p>Los nombres, precios y dominios de esta fuente son material de demostración. La interfaz muestra “de demostración” para no presentarlos como ofertas reales.</p></aside>
+        </section>
+
+        <section>
+          <h2>3. Declara el contrato remoto con Retrofit</h2>
+          <p>Crea el paquete <code>data/remote</code>. Los DTO representan exactamente el JSON de Supabase; el modelo de dominio permanece independiente.</p>
+          <pre data-file="data/remote/SearchProductsDto.kt"><code class="language-kotlin">package com.apps.iatinyfish.data.remote
+
+import com.apps.iatinyfish.data.model.ProductOffer
+
+data class SearchProductsRequest(val query: String)
+data class SearchProductsResponse(val offers: List&lt;ProductOfferDto&gt; = emptyList())
+
+data class ProductOfferDto(
+    val id: String = "",
+    val store: String = "Fuente web",
+    val productName: String = "",
+    val price: String = "Ver en fuente",
+    val originalPrice: String? = null,
+    val shipping: String = "Consulta en tienda",
+    val delivery: String = "Disponibilidad por confirmar",
+    val rating: String = "—",
+    val sourceUrl: String = "",
+    val summary: String = "Resultado encontrado en la web.",
+    val tags: List&lt;String&gt; = listOf("Resultado web"),
+    val isBestValue: Boolean = false,
+)
+
+data class ApiErrorResponse(val error: String? = null)
+
+fun ProductOfferDto.toProductOffer() = ProductOffer(
+    id, store, productName, price, originalPrice, shipping, delivery,
+    rating, sourceUrl, summary, tags, isBestValue,
+)</code></pre>
+          <pre data-file="data/remote/TinyPriceApi.kt"><code class="language-kotlin">package com.apps.iatinyfish.data.remote
+
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+interface TinyPriceApi {
+    @POST("search-products")
+    suspend fun searchProducts(
+        @Body request: SearchProductsRequest,
+    ): Response&lt;SearchProductsResponse&gt;
+}</code></pre>
+          <pre data-file="data/remote/TinyPriceApiFactory.kt"><code class="language-kotlin">package com.apps.iatinyfish.data.remote
+
+import com.apps.iatinyfish.BuildConfig
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
+object TinyPriceApiFactory {
+    private val httpClient = OkHttpClient.Builder()
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
+        .writeTimeout(20, TimeUnit.SECONDS)
+        .build()
+
+    fun create(): TinyPriceApi = Retrofit.Builder()
+        .baseUrl(BuildConfig.EDGE_RUNTIME_BASE_URL.ensureTrailingSlash())
+        .client(httpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(TinyPriceApi::class.java)
+}
+
+private fun String.ensureTrailingSlash() =
+    if (endsWith('/')) this else "$this/"</code></pre>
+          <aside class="callout note"><b>La barra final sí importa</b><p>Retrofit exige que la URL base termine en <code>/</code>. <code>ensureTrailingSlash()</code> permite escribir la propiedad con o sin esa barra y evita una configuración frágil.</p></aside>
+        </section>
+
+        <section>
+          <h2>4. Implementa el repositorio remoto</h2>
+          <p>El repositorio invoca Retrofit, transforma DTO a dominio y conserva el mensaje JSON de los errores controlados.</p>
+          <pre data-file="data/repository/RemoteDealsRepository.kt"><code class="language-kotlin">package com.apps.iatinyfish.data.repository
+
+import com.apps.iatinyfish.BuildConfig
+import com.apps.iatinyfish.data.model.ProductOffer
+import com.apps.iatinyfish.data.remote.*
+import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Response
+
+class RemoteDealsRepository(
+    private val api: TinyPriceApi = TinyPriceApiFactory.create(),
+    private val gson: Gson = Gson(),
+) : DealsRepository {
+    override val isPreviewData = false
+
+    override suspend fun search(query: String): List&lt;ProductOffer&gt; =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = api.searchProducts(SearchProductsRequest(query))
+                if (!response.isSuccessful) {
+                    throw RemoteSearchException(response.errorMessage())
+                }
+                response.body()?.offers.orEmpty().map { it.toProductOffer() }
+            } catch (error: RemoteSearchException) {
+                throw error
+            } catch (_: Exception) {
+                throw RemoteSearchException(
+                    "No se pudo conectar con la búsqueda en vivo. Revisa tu conexión e inténtalo de nuevo.",
+                )
+            }
+        }
+
+    private fun Response&lt;*&gt;.errorMessage(): String = runCatching {
+        errorBody()?.charStream()?.use { reader -&gt;
+            gson.fromJson(reader, ApiErrorResponse::class.java)?.error
+        }
+    }.getOrNull().orEmpty().ifBlank {
+        "No fue posible hacer la búsqueda en vivo. Inténtalo de nuevo."
+    }
+}
+
+class RemoteSearchException(message: String) : Exception(message)
+
+object DealsRepositoryProvider {
+    fun create(): DealsRepository =
+        if (BuildConfig.USE_REMOTE_DEALS) RemoteDealsRepository()
+        else PreviewDealsRepository
+}</code></pre>
+          <aside class="callout info"><b>Dos modos, una misma UI</b><p><code>BuildConfig.USE_REMOTE_DEALS</code> se decide al compilar. El resto de la app solo conoce <code>DealsRepository</code>, por lo que no contiene condiciones de red dispersas.</p></aside>
+        </section>
+
+        <section>
+          <h2>5. Verifica la capa</h2>
+          <pre><code class="language-shell">./gradlew :app:compileDebugKotlin</code></pre>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>La compilación termina con <code>BUILD SUCCESSFUL</code>. Aún no actives la búsqueda remota: el endpoint se construirá en los pasos de Supabase.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-5" data-step="5" data-title="Estado y ViewModel">
+        <span class="track-badge android">BLOQUE ANDROID · 4 DE 5</span>
+        <h1>Modelar estado, eventos y búsqueda</h1>
+        <p class="lead">Un único estado inmutable describe todo lo visible. Los eventos expresan intenciones del usuario y el ViewModel coordina el repositorio.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Continúa en Android Studio, dentro del paquete <code>presentation/deals</code>. Edita <code>DealsViewModel.kt</code> y después <code>MainActivity.kt</code>. En este punto la búsqueda usa <code>PreviewDealsRepository</code>, por lo que puedes razonar sobre el estado sin esperar llamadas de red.</p></div>
+
+        <section>
+          <h2>1. Estados que debe representar la pantalla</h2>
+          <p>Imagina que pulsas <b>Buscar</b>. La pantalla debe pasar por una secuencia comprensible: antes de buscar muestra la introducción; al iniciar, un indicador de carga; al terminar, resultados o un mensaje de vacío o error. Si seleccionas una tarjeta, muestra el detalle correspondiente. Las propiedades siguientes expresan esas situaciones en datos, y Compose las convertirá en componentes visibles.</p>
+          <div class="state-grid">
+            <div><b>Inicio</b><span><code>hasSearched = false</code></span></div>
+            <div><b>Carga</b><span><code>isLoading = true</code></span></div>
+            <div><b>Resultados</b><span><code>offers.isNotEmpty()</code></span></div>
+            <div><b>Vacío/error</b><span><code>offers.isEmpty()</code></span></div>
+            <div><b>Detalle</b><span><code>selectedOffer != null</code></span></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>2. Crea <code>DealsViewModel.kt</code></h2>
+          <p>El ViewModel recibe eventos como <code>SubmitSearch</code> y modifica <code>DealsUiState</code>. La interfaz observa ese estado; no realiza la búsqueda directamente. Esta separación ayuda a probar qué ocurre con una consulta vacía, una respuesta correcta y un error sin depender de cómo está dibujada la pantalla.</p>
+          <pre data-file="DealsViewModel.kt"><code class="language-kotlin">package com.apps.iatinyfish.presentation.deals
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.apps.iatinyfish.data.model.ProductOffer
+import com.apps.iatinyfish.data.repository.DealsRepository
+import com.apps.iatinyfish.data.repository.DealsRepositoryProvider
+import com.apps.iatinyfish.data.repository.RemoteSearchException
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
+
+data class DealsUiState(
+    val query: String = "",
+    val offers: List&lt;ProductOffer&gt; = emptyList(),
+    val hasSearched: Boolean = false,
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null,
+    val isPreviewData: Boolean = true,
+    val selectedOffer: ProductOffer? = null,
+)
+
+sealed interface DealsEvent {
+    data class QueryChanged(val value: String) : DealsEvent
+    data object SubmitSearch : DealsEvent
+    data class UseSuggestion(val value: String) : DealsEvent
+    data class OpenOffer(val offer: ProductOffer) : DealsEvent
+    data object Back : DealsEvent
+}
+
+class DealsViewModel(
+    private val repository: DealsRepository = DealsRepositoryProvider.create(),
+) : ViewModel() {
+    private var searchJob: Job? = null
+    private val _state = MutableStateFlow(DealsUiState(isPreviewData = repository.isPreviewData))
+    val state: StateFlow&lt;DealsUiState&gt; = _state.asStateFlow()
+
+    fun onEvent(event: DealsEvent) {
+        when (event) {
+            is DealsEvent.QueryChanged -&gt; _state.update {
+                it.copy(query = event.value, selectedOffer = null, errorMessage = null)
+            }
+            DealsEvent.SubmitSearch -&gt; search(_state.value.query)
+            is DealsEvent.UseSuggestion -&gt; {
+                _state.update { it.copy(query = event.value, selectedOffer = null, errorMessage = null) }
+                search(event.value)
+            }
+            is DealsEvent.OpenOffer -&gt; _state.update { it.copy(selectedOffer = event.offer) }
+            DealsEvent.Back -&gt; _state.update { it.copy(selectedOffer = null) }
+        }
+    }
+
+    private fun search(query: String) {
+        if (query.isBlank()) {
+            _state.update {
+                it.copy(
+                    hasSearched = true,
+                    offers = emptyList(),
+                    errorMessage = "Escribe un producto para iniciar la búsqueda.",
+                )
+            }
+            return
+        }
+
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            _state.update {
+                it.copy(isLoading = true, hasSearched = true, selectedOffer = null, errorMessage = null)
+            }
+            try {
+                val offers = repository.search(query)
+                _state.update { it.copy(offers = offers, isLoading = false) }
+            } catch (error: RemoteSearchException) {
+                _state.update {
+                    it.copy(offers = emptyList(), isLoading = false, errorMessage = error.message)
+                }
+            }
+        }
+    }
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>3. Conecta <code>MainActivity</code></h2>
+          <p>La Activity crea el ViewModel, observa el flujo y entrega estado + manejador de eventos a Compose.</p>
+          <pre data-file="MainActivity.kt"><code class="language-kotlin">package com.apps.iatinyfish
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.apps.iatinyfish.presentation.deals.DealsApp
+import com.apps.iatinyfish.presentation.deals.DealsViewModel
+import com.apps.iatinyfish.ui.theme.IATinyFishTheme
+
+class MainActivity : ComponentActivity() {
+    private val viewModel: DealsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            IATinyFishTheme {
+                DealsApp(state = state, onEvent = viewModel::onEvent)
+            }
+        }
+    }
+}</code></pre>
+          <aside class="callout note"><b>Flujo unidireccional</b><p>La UI no muta el estado. Emite un evento; el ViewModel produce un nuevo estado; Compose vuelve a dibujar. Esta dirección hace que el comportamiento sea más fácil de probar.</p></aside>
+        </section>
+
+        <section>
+          <h2>4. Razona sobre la corrutina</h2>
+          <ul>
+            <li><code>viewModelScope</code> cancela el trabajo cuando desaparece el ViewModel.</li>
+            <li><code>searchJob?.cancel()</code> evita que una búsqueda anterior llegue tarde y reemplace resultados más nuevos.</li>
+            <li><code>RemoteDealsRepository</code> cambia a <code>Dispatchers.IO</code> para aislar la operación de red.</li>
+            <li><code>collectAsStateWithLifecycle()</code> deja de recolectar el flujo cuando la Activity no está visible y conserva recursos.</li>
+          </ul>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>Una búsqueda vacía no inicia red y deja un mensaje claro; una búsqueda válida activa carga antes de entregar resultados.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-6" data-step="6" data-title="Interfaz con Compose">
+        <span class="track-badge android">BLOQUE ANDROID · 5 DE 5</span>
+        <h1>Construir la interfaz con Jetpack Compose</h1>
+        <p class="lead">TinyPrice alterna entre búsqueda y detalle, y dentro de la búsqueda representa inicio, carga, vacío y resultados. Construiremos la pantalla con componentes pequeños.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Escribe los archivos de <code>ui/theme/</code> y <code>presentation/deals/</code> en Android Studio. Después compila desde la terminal de <code>IATinyFish/</code> y usa un emulador para interactuar con la app. Verás datos de demostración porque la función de Supabase todavía no está desplegada.</p></div>
+
+        <section>
+          <h2>1. Define el tema oceánico</h2>
+          <p>En <code>ui/theme/Color.kt</code> crea la paleta:</p>
+          <pre data-file="Color.kt"><code class="language-kotlin">package com.apps.iatinyfish.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+val Ocean = Color(0xFF075985)
+val OceanDark = Color(0xFF0C4A6E)
+val Aqua = Color(0xFF06B6D4)
+val SeaFoam = Color(0xFFCFFAFE)
+val Ink = Color(0xFF102A43)
+val Mist = Color(0xFFF5FAFC)
+val Night = Color(0xFF071C2C)
+val NightSurface = Color(0xFF102C3E)</code></pre>
+          <p>En <code>Theme.kt</code> usa esos colores en los esquemas claro y oscuro. Los nombres semánticos de Material —<code>primary</code>, <code>surface</code>, <code>onSurface</code>— permiten que los componentes se adapten sin colores incrustados.</p>
+          <pre data-file="Theme.kt"><code class="language-kotlin">private val LightColorScheme = lightColorScheme(
+    primary = Ocean,
+    onPrimary = Color.White,
+    primaryContainer = SeaFoam,
+    onPrimaryContainer = OceanDark,
+    secondary = Color(0xFF166582),
+    secondaryContainer = Color(0xFFE0F5FC),
+    tertiary = Color(0xFF0F766E),
+    background = Mist,
+    onBackground = Ink,
+    surface = Color.White,
+    onSurface = Ink,
+    surfaceVariant = Color(0xFFEAF4F7),
+    onSurfaceVariant = Color(0xFF52616B),
+    outlineVariant = Color(0xFFC9D9DE),
+)
+
+@Composable
+fun IATinyFishTheme(content: @Composable () -&gt; Unit) {
+    val scheme = if (isSystemInDarkTheme()) DarkColorScheme else LightColorScheme
+    MaterialTheme(colorScheme = scheme, typography = Typography, content = content)
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>2. Enruta mediante estado</h2>
+          <p>La navegación de este laboratorio es pequeña: una pantalla de búsqueda y una de detalle. En lugar de introducir una biblioteca de navegación adicional, comprobamos si hay una oferta seleccionada. Si la hay, mostramos su detalle; si no, permanecemos en la búsqueda. El botón Atrás limpia la selección y devuelve a la lista.</p>
+          <p>Crea <code>presentation/deals/DealsApp.kt</code>. La raíz usa <code>selectedOffer</code> como destino y respeta el botón Atrás del sistema.</p>
+          <pre><code class="language-kotlin">@Composable
+fun DealsApp(state: DealsUiState, onEvent: (DealsEvent) -&gt; Unit) {
+    BackHandler(enabled = state.selectedOffer != null) {
+        onEvent(DealsEvent.Back)
+    }
+    AnimatedContent(
+        targetState = state.selectedOffer,
+        transitionSpec = { fadeIn(tween(180)) togetherWith fadeOut(tween(120)) },
+        label = "screen",
+    ) { offer -&gt;
+        if (offer == null) DealsSearchScreen(state, onEvent)
+        else DealDetailScreen(offer, onBack = { onEvent(DealsEvent.Back) })
+    }
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>3. Crea cabecera y búsqueda</h2>
+          <pre><code class="language-kotlin">@Composable
+private fun DealsSearchScreen(state: DealsUiState, onEvent: (DealsEvent) -&gt; Unit) {
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
+        topBar = {
+            Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 14.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    FishMark()
+                    Spacer(Modifier.width(10.dp))
+                    Column {
+                        Text("TinyPrice", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black)
+                        Text("Búsqueda web inteligente", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
+                Spacer(Modifier.height(16.dp))
+                OutlinedTextField(
+                    value = state.query,
+                    onValueChange = { onEvent(DealsEvent.QueryChanged(it)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    placeholder = { Text("¿Qué quieres comparar?") },
+                    leadingIcon = {
+                        Text(
+                            "⌕",
+                            fontSize = 26.sp,
+                            modifier = Modifier.semantics {
+                                contentDescription = "Buscar productos"
+                            },
+                        )
+                    },
+                    trailingIcon = {
+                        TextButton(onClick = { onEvent(DealsEvent.SubmitSearch) }) {
+                            Text("Buscar", fontWeight = FontWeight.Bold)
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(
+                        onSearch = { onEvent(DealsEvent.SubmitSearch) },
+                    ),
+                    shape = RoundedCornerShape(18.dp),
+                )
+            }
+        },
+    ) { padding -&gt;
+        if (state.hasSearched) {
+            SearchResults(state, padding.calculateTopPadding(), onEvent)
+        } else {
+            DiscoveryHome(padding.calculateTopPadding()) {
+                onEvent(DealsEvent.UseSuggestion(it))
+            }
+        }
+    }
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>4. Representa todos los estados</h2>
+          <p>El orden de decisión importa: primero carga, luego vacío/error, y finalmente la lista.</p>
+          <pre><code class="language-kotlin">@Composable
+private fun SearchResults(
+    state: DealsUiState,
+    topPadding: Dp,
+    onEvent: (DealsEvent) -&gt; Unit,
+) {
+    when {
+        state.isLoading -&gt; LoadingState(topPadding)
+        state.offers.isEmpty() -&gt; EmptyState(
+            message = state.errorMessage ?: "No encontramos ofertas para “${state.query}”",
+            topPadding = topPadding,
+            onRetry = { onEvent(DealsEvent.SubmitSearch) },
+        )
+        else -&gt; LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(20.dp, topPadding + 6.dp, 20.dp, 28.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            item {
+                Text(
+                    "Resultados para “${state.query}”",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.ExtraBold,
+                )
+            }
+            items(state.offers, key = ProductOffer::id) { offer -&gt;
+                OfferCard(offer) { onEvent(DealsEvent.OpenOffer(offer)) }
+            }
+        }
+    }
+}</code></pre>
+          <aside class="callout info"><b>Importaciones</b><p>Android Studio puede resolverlas automáticamente con <b>Optimize Imports</b>. Los principales paquetes son <code>androidx.compose.foundation.*</code>, <code>androidx.compose.material3.*</code>, <code>androidx.compose.runtime.*</code> y <code>androidx.compose.ui.*</code>.</p></aside>
+        </section>
+
+        <section>
+          <h2>5. Tarjeta y detalle</h2>
+          <pre><code class="language-kotlin">@Composable
+private fun OfferCard(offer: ProductOffer, onClick: () -&gt; Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        shape = RoundedCornerShape(22.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    ) {
+        Column(Modifier.padding(18.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Column(Modifier.weight(1f)) {
+                    Text(offer.store, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                    Text(offer.productName, style = MaterialTheme.typography.titleMedium)
+                }
+                Text(offer.price, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black)
+            }
+            Spacer(Modifier.height(14.dp))
+            HorizontalDivider()
+            Spacer(Modifier.height(12.dp))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(offer.shipping, style = MaterialTheme.typography.bodySmall)
+                Text("★ ${offer.rating}", fontWeight = FontWeight.Bold)
+                Text(offer.delivery, style = MaterialTheme.typography.bodySmall)
+            }
+        }
+    }
+}</code></pre>
+          <p>En el detalle, muestra <code>summary</code>, entrega, valoración y <code>sourceUrl</code>. Si la URL comienza por <code>http://</code> o <code>https://</code>, abre un <code>Intent.ACTION_VIEW</code> para que el usuario verifique la fuente.</p>
+        </section>
+
+        <section>
+          <h2>6. Agrega accesibilidad y entrada por teclado</h2>
+          <ul class="check-list">
+            <li>Describe los glifos decorativos o márcalos como no semánticos para que TalkBack no lea símbolos sin contexto.</li>
+            <li>Usa <code>ImeAction.Search</code> para que el botón Buscar del teclado ejecute la misma acción.</li>
+            <li>Marca carga y error como regiones vivas con <code>LiveRegionMode.Polite</code>.</li>
+            <li>Mantén objetivos táctiles de al menos 48 dp y prueba escalado de fuente.</li>
+          </ul>
+          <pre><code class="language-kotlin">Modifier.semantics { liveRegion = LiveRegionMode.Polite }
+
+KeyboardOptions(imeAction = ImeAction.Search)
+KeyboardActions(onSearch = { onEvent(DealsEvent.SubmitSearch) })</code></pre>
+          <aside class="callout note"><b>La apariencia no basta</b><p>Recorre la pantalla con TalkBack: el campo debe anunciar su propósito, el estado de carga debe percibirse sin mirar y cada tarjeta debe tener un nombre comprensible.</p></aside>
+        </section>
+
+        <section>
+          <h2>7. Ejecuta la demo local</h2>
+          <p>Este es el cierre del bloque Android. El comando crea un APK de depuración a partir de los archivos que acabas de escribir. Después usa <b>Run</b> en Android Studio para instalarlo en el emulador que preparaste. Que aparezcan tiendas y precios ficticios es el resultado esperado en esta fase.</p>
+          <pre><code class="language-shell">./gradlew :app:assembleDebug</code></pre>
+          <p>Ejecuta desde Android Studio, toca la sugerencia “Nintendo Switch OLED”, abre una tarjeta y vuelve con el botón del sistema.</p>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>Ves datos de demostración, la navegación al detalle funciona y la UI se adapta al tema claro/oscuro. La etiqueta debe dejar claro que aún no son resultados web.</p></div></div>
+          <aside class="callout info"><b>Transición a Supabase</b><p>La interfaz ya funciona y la fuente de datos local permite probarla. En el bloque siguiente crearás una cuenta y un proyecto alojado de Supabase; allí colocarás la clave de TinyFish y publicarás una función. Al finalizar ese bloque cambiarás una propiedad de compilación para que esta misma interfaz muestre resultados web.</p></aside>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-7" data-step="7" data-title="Crear cuenta, recibir créditos y obtener la clave">
+        <span class="track-badge tinyfish">BLOQUE TINYFISH · 1 DE 2</span>
+        <h1>Crear tu cuenta, recibir créditos y obtener una API key</h1>
+        <p class="lead">Inicia el registro desde el enlace de referencia de este codelab. Es importante usar esta URL para que puedas recibir los créditos promocionales del referido y para que el instructor también reciba créditos.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Realiza este paso en el navegador, dentro del sitio oficial de TinyFish. Ten acceso a tu correo para verificar la cuenta y un gestor de contraseñas para guardar la API key. Todavía no necesitas Android Studio ni Supabase.</p></div>
+
+        <section>
+          <h2>1. Abre el enlace de referencia</h2>
+          <p>El registro comienza aquí porque el parámetro <code>ref</code> identifica el enlace del instructor. Si abres TinyFish por otra ruta y te registras desde allí, el referido podría no quedar asociado a tu nueva cuenta. Abre el botón y conserva esa pestaña durante el proceso.</p>
+          <div class="referral-card">
+            <div>
+              <span class="referral-label">ENLACE DEL INSTRUCTOR</span>
+              <h3>Registro oficial de TinyFish</h3>
+              <p>Usa este botón para comenzar y conservar el referido. De este modo, tanto el participante como el instructor pueden recibir los créditos correspondientes.</p>
+            </div>
+            <a class="referral-button" href="https://agent.tinyfish.ai/sign-up?ref=v1.dXNlcl8zS0hjb0luTUEwUG9JWmtreHNNT3QzaEdWa2E.6Uxo8foWd4er6FOBL24b1Uvx8knIQCS7pRrPzpB6r5U" target="_blank" rel="noreferrer">Crear mi cuenta con el enlace de referencia ↗</a>
+          </div>
+          <aside class="callout warning"><b>El enlace de referencia es obligatorio para obtener el beneficio</b><p>No abras una página de registro distinta ni escribas manualmente la dirección de TinyFish. Entra desde el botón del codelab y no elimines el parámetro <code>ref</code>; de lo contrario, TinyFish podría no asociar los créditos al participante ni al instructor. La entrega y vigencia de los créditos dependen de las condiciones actuales del programa de referidos de TinyFish.</p></aside>
+        </section>
+
+        <section>
+          <h2>2. Regístrate con correo electrónico</h2>
+          <p>En la tarjeta <b>Create account</b>, ignora los botones de GitHub, Google, Microsoft y X/Twitter. Para este codelab utiliza el campo <b>Email address</b>.</p>
+          <div class="email-signup">
+            <span aria-hidden="true">@</span>
+            <div><b>Email address</b><p>Escribe un correo personal al que puedas acceder durante el laboratorio y pulsa <i>Continue</i>.</p></div>
+          </div>
+          <ol class="flow-list signup-flow">
+            <li><span>1</span><div><b>Abre el formulario</b><p>Comprueba que la URL comienza con <code>https://agent.tinyfish.ai/sign-up</code> y mantiene <code>?ref=...</code>.</p></div></li>
+            <li><span>2</span><div><b>Introduce el correo</b><p>Baja hasta <b>Email address</b>, escribe la dirección completa, revisa que no tenga espacios ni errores y pulsa <b>Continue</b>.</p></div></li>
+            <li><span>3</span><div><b>Abre el mensaje de TinyFish</b><p>Consulta la bandeja de entrada del mismo correo. Si no aparece, espera un momento y revisa Spam, No deseado o Promociones.</p></div></li>
+            <li><span>4</span><div><b>Verifica la dirección</b><p>Utiliza el enlace o código que muestre el correo. No compartas ese enlace o código con otra persona.</p></div></li>
+            <li><span>5</span><div><b>Finaliza el registro</b><p>Completa únicamente los datos adicionales que solicite TinyFish hasta llegar al panel autenticado.</p></div></li>
+          </ol>
+          <aside class="callout note"><b>Términos y privacidad</b><p>Al pulsar <b>Continue</b>, la pantalla indica que aceptas los términos y la política de privacidad de TinyFish. Revísalos antes de enviar tu correo.</p></aside>
+        </section>
+
+        <section>
+          <h2>3. Crea la API key</h2>
+          <p>Una API key es una credencial que permite a un programa llamar a TinyFish en nombre de tu cuenta. Puede mostrarse una sola vez al crearla: por eso debes copiarla a un lugar privado antes de cerrar la pantalla. En este laboratorio su destino definitivo será Supabase, pero todavía no hemos creado ese proyecto.</p>
+          <ol>
+            <li>Dentro del panel abre <b>API Keys</b>, o visita <a href="https://agent.tinyfish.ai/api-keys" target="_blank" rel="noreferrer">agent.tinyfish.ai/api-keys</a> después de iniciar sesión.</li>
+            <li>Pulsa <b>Create API Key</b>.</li>
+            <li>Si solicita un nombre, usa uno descriptivo como <code>tinyprice-codelab</code>.</li>
+            <li>Copia la clave cuando aparezca y guárdala temporalmente en un gestor de contraseñas.</li>
+            <li>Vuelve al listado y comprueba que la nueva clave figura como activa.</li>
+          </ol>
+          <aside class="callout danger"><b>La clave no pertenece al proyecto Android</b><p>No la pegues en Kotlin, <code>BuildConfig</code>, <code>local.properties</code>, GitHub ni una captura. Guárdala únicamente en un gestor de contraseñas: después del bloque Android la añadirás como <code>TINYFISH_API_KEY</code> en los secretos alojados de Supabase.</p></aside>
+        </section>
+
+        <section>
+          <h2>4. Revisa créditos, consumo y claves</h2>
+          <ol>
+            <li>Abre el apartado de cuenta, Wallet o uso que muestre el panel de TinyFish.</li>
+            <li>Comprueba si el referido quedó asociado y anota el saldo o beneficio que muestre tu cuenta; no uses una cantidad fija del tutorial porque el programa puede cambiar.</li>
+            <li>Antes de una práctica extensa, revisa los límites vigentes del producto que vayas a usar. TinyFish indica actualmente que Search no consume el saldo del Wallet, pero otros productos o condiciones pueden ser distintos.</li>
+            <li>Si sospechas que una clave se expuso, crea una sustituta, actualiza el secreto de Supabase, prueba la función y revoca la clave anterior.</li>
+          </ol>
+          <aside class="callout info"><b>El referido beneficia a ambas partes</b><p>Usar la URL del instructor permite que TinyFish asocie los créditos promocionales tanto al participante como al instructor, cuando se cumplan las condiciones vigentes. El codelab no promete una cantidad ni una fecha de entrega.</p></aside>
+        </section>
+
+        <section>
+          <h2>5. Comprueba el resultado</h2>
+          <ul class="check-list">
+            <li>La cuenta se creó comenzando desde el enlace de referencia del codelab, sin eliminar el parámetro <code>ref</code>.</li>
+            <li>Puedes volver a entrar al panel de TinyFish.</li>
+            <li>La sección API Keys muestra al menos una clave activa.</li>
+            <li>La clave está en un lugar privado y no dentro del repositorio.</li>
+          </ul>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>Tienes una cuenta funcional y una API key preparada. En el siguiente paso probarás Search desde una terminal privada antes de mover la clave a Supabase.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-8" data-step="8" data-title="Búsqueda web con TinyFish">
+        <span class="track-badge tinyfish">BLOQUE TINYFISH · 2 DE 2</span>
+        <h1>Comprender y probar TinyFish Search</h1>
+        <p class="lead">TinyFish Search es la fuente de descubrimiento. La llamaremos desde Supabase para mantener la clave fuera del cliente Android.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Lee la forma de la solicitud y la respuesta en esta página. La prueba de <code>curl</code> se hace en una terminal privada, que puede ser la integrada en Android Studio o la de tu sistema; no se ejecuta en el editor de Kotlin ni en esta página. Usa la API key creada en el paso anterior y consérvala en tu gestor.</p></div>
+
+        <section>
+          <h2>1. Conoce la solicitud</h2>
+          <p>La API usa un <code>GET</code> con parámetros de consulta y autenticación en <code>X-API-Key</code>:</p>
+          <p><code>query</code> es el producto que quieres buscar; <code>location=EC</code> y <code>language=es</code> contextualizan el ejemplo para Ecuador y español. Sustituye <code>YOUR_TINYFISH_API_KEY</code> por tu propia clave únicamente al hacer la prueba en privado. No copies una clave real en el codelab, en capturas ni en archivos del proyecto.</p>
+          <pre><code class="language-shell">curl --get 'https://api.search.tinyfish.ai' \
+  --header 'X-API-Key: YOUR_TINYFISH_API_KEY' \
+  --data-urlencode 'query=Nintendo Switch OLED ofertas' \
+  --data-urlencode 'location=EC' \
+  --data-urlencode 'language=es'</code></pre>
+          <p>Ejecuta esta prueba solo en una terminal privada. No pegues la salida en incidencias si pudiera contener información sensible.</p>
+        </section>
+
+        <section>
+          <h2>2. Lee la respuesta</h2>
+          <p>El JSON siguiente muestra la estructura que debes reconocer, no una oferta real. Un resultado tiene una URL, un título y un fragmento. Más adelante Supabase convertirá esos campos en <code>sourceUrl</code>, <code>productName</code> y <code>summary</code> para que Android no dependa directamente de los nombres usados por TinyFish.</p>
+          <pre><code class="language-json">{
+  "query": "Nintendo Switch OLED ofertas",
+  "results": [
+    {
+      "position": 1,
+      "site_name": "Nombre de la fuente",
+      "title": "Título de la página",
+      "snippet": "Texto que resume el resultado...",
+      "url": "https://fuente.example/producto"
+    }
+  ]
+}</code></pre>
+          <table>
+            <thead><tr><th>TinyFish</th><th>TinyPrice</th><th>Decisión</th></tr></thead>
+            <tbody>
+              <tr><td><code>site_name</code></td><td><code>store</code></td><td>Si falta, extraer el dominio.</td></tr>
+              <tr><td><code>title</code></td><td><code>productName</code></td><td>Usar la consulta como respaldo.</td></tr>
+              <tr><td><code>snippet</code></td><td><code>summary</code></td><td>No afirmar más de lo recibido.</td></tr>
+              <tr><td><code>url</code></td><td><code>sourceUrl</code></td><td>Conservar para verificación.</td></tr>
+              <tr><td>—</td><td><code>price</code></td><td>Mostrar “Ver en fuente”.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>3. Responsabilidades de Supabase</h2>
+          <ul class="check-list">
+            <li>Validar que la consulta tenga entre 2 y 200 caracteres.</li>
+            <li>Leer <code>TINYFISH_API_KEY</code> desde secretos de producción.</li>
+            <li>Aplicar un límite básico de solicitudes para el laboratorio.</li>
+            <li>Controlar timeout y errores de la dependencia.</li>
+            <li>Transformar resultados al contrato de Android.</li>
+          </ul>
+          <aside class="callout warning"><b>TinyPrice descubre fuentes; todavía no compara precios normalizados</b><p>Search entrega URL, título, fragmento y metadatos. Para afirmar “mejor precio” necesitas una segunda etapa que lea la página autorizada, extraiga precio y moneda, valide disponibilidad, registre la hora de consulta y descarte valores ambiguos. Hasta entonces, la UI usa “Ver en fuente”.</p></aside>
+          <aside class="callout note"><b>Privacidad de la consulta</b><p>El texto escrito por el usuario sale del dispositivo, pasa por Supabase y se envía a TinyFish. Evita incluir correos, números de identidad, credenciales u otros datos personales en las búsquedas; tampoco registres el cuerpo completo si no es necesario para diagnosticar.</p></aside>
+          <aside class="callout info"><b>Lo que sigue</b><p>Ya confirmaste que TinyFish responde. Guarda la clave en tu gestor y no la uses desde Android: el siguiente bloque crea la interfaz con datos de demostración. Cuando llegues a Supabase, la guardarás como secreto de producción.</p></aside>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>La prueba directa devuelve un arreglo <code>results</code>. La clave ya no se necesita en terminal hasta el bloque Supabase; continúa con Android sin añadirla al proyecto.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-9" data-step="9" data-title="Crear cuenta de Supabase por correo">
+        <span class="track-badge supabase">BLOQUE SUPABASE CLOUD · 1 DE 4</span>
+        <h1>Crear una cuenta de Supabase con correo</h1>
+        <p class="lead">Ahora crearás el espacio seguro donde vivirá la API key que dejaste guardada. Registra una cuenta para acceder al Dashboard alojado con correo y contraseña, sin GitHub, ChatGPT ni inicio de sesión empresarial.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Usa el navegador para abrir el sitio oficial de Supabase y completar el registro. Ten acceso a tu correo para confirmar la cuenta. En este paso no debes editar archivos ni ejecutar comandos; el proyecto alojado se creará después de entrar al Dashboard.</p></div>
+
+        <section>
+          <h2>1. Abre el formulario oficial</h2>
+          <p>La cuenta de Supabase pertenece a la persona que administra el backend. Es distinta de tu cuenta de TinyFish: TinyFish ofrece la búsqueda y Supabase alojará el código que la llama. Utiliza el botón siguiente para abrir el formulario oficial en otra pestaña y vuelve al codelab cuando hayas iniciado sesión.</p>
+          <div class="referral-card supabase-signup-card">
+            <div>
+              <span class="referral-label">SUPABASE CLOUD</span>
+              <h3>Create a new account</h3>
+              <p>Abre el registro oficial y utiliza exclusivamente los campos <b>Email</b> y <b>Password</b>.</p>
+            </div>
+            <a class="referral-button supabase-signup-button" href="https://supabase.com/dashboard/sign-up" target="_blank" rel="noreferrer">Crear cuenta en Supabase ↗</a>
+          </div>
+          <aside class="callout info"><b>Cuenta del Dashboard, no usuario de la app</b><p>Este registro te permite administrar proyectos en Supabase Cloud. No crea un usuario dentro de Supabase Auth para TinyPrice; son identidades diferentes.</p></aside>
+        </section>
+
+        <section>
+          <h2>2. Completa Email y Password</h2>
+          <ol class="flow-list signup-flow">
+            <li><span>1</span><div><b>Localiza el formulario</b><p>Ignora <b>Continue with GitHub</b>, <b>Continue with ChatGPT</b> y <b>Continue with SSO</b>. Baja hasta la separación <i>or</i>.</p></div></li>
+            <li><span>2</span><div><b>Escribe tu correo</b><p>En <b>Email</b>, introduce una dirección personal a la que puedas acceder durante el laboratorio.</p></div></li>
+            <li><span>3</span><div><b>Crea una contraseña</b><p>En <b>Password</b>, utiliza una contraseña nueva y única. Lo recomendable es generarla y guardarla con un gestor de contraseñas.</p></div></li>
+            <li><span>4</span><div><b>Revisa los requisitos</b><p>El indicador debe confirmar todos los requisitos antes de habilitar el botón <b>Sign up</b>.</p></div></li>
+          </ol>
+          <div class="password-rules" aria-label="Requisitos de contraseña de Supabase">
+            <div><span>✓</span>Mayúscula</div>
+            <div><span>✓</span>Minúscula</div>
+            <div><span>✓</span>Número</div>
+            <div><span>✓</span>Carácter especial</div>
+            <div><span>✓</span>8 caracteres o más</div>
+          </div>
+          <aside class="callout warning"><b>No reutilices contraseñas</b><p>La contraseña del Dashboard protege proyectos, secretos y despliegues. No uses la misma contraseña de tu correo y no la guardes en el repositorio.</p></aside>
+        </section>
+
+        <section>
+          <h2>3. Envía el registro y confirma el correo</h2>
+          <ol>
+            <li>Revisa el correo y la contraseña antes de continuar.</li>
+            <li>Lee los <a href="https://supabase.com/terms" target="_blank" rel="noreferrer">Términos de servicio</a> y la <a href="https://supabase.com/privacy" target="_blank" rel="noreferrer">Política de privacidad</a> enlazados bajo el formulario.</li>
+            <li>Pulsa <b>Sign up</b>.</li>
+            <li>Abre la bandeja de entrada del mismo correo y busca el mensaje de Supabase.</li>
+            <li>Si Supabase solicita confirmación, abre el enlace del mensaje. Comprueba antes que el destino pertenece a <code>supabase.com</code>.</li>
+            <li>Si no recibes el mensaje, revisa Spam, No deseado y Promociones antes de solicitar otro.</li>
+          </ol>
+          <aside class="callout danger"><b>No compartas enlaces de verificación</b><p>Un enlace de confirmación puede acreditar la propiedad del correo. No lo pegues en el codelab, una incidencia, un chat ni una captura.</p></aside>
+        </section>
+
+        <section>
+          <h2>4. Entra al Dashboard</h2>
+          <ol>
+            <li>Abre <a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer">supabase.com/dashboard</a>.</li>
+            <li>Si aparece la pantalla de acceso, elige <b>Sign in</b> e introduce el mismo correo y contraseña.</li>
+            <li>Completa únicamente los datos iniciales que solicite Supabase.</li>
+            <li>Confirma que puedes ver el Dashboard y la sección de organizaciones.</li>
+          </ol>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>Puedes cerrar sesión y volver a entrar con correo y contraseña. Ya tienes acceso al Dashboard; en el siguiente paso crearás el proyecto remoto de TinyPrice.</p></div></div>
+        </section>
+
+        <section>
+          <h2>Referencia oficial</h2>
+          <p>La documentación de plataforma confirma que el Dashboard es el punto de entrada para crear y administrar proyectos alojados: <a href="https://supabase.com/docs/guides/platform" target="_blank" rel="noreferrer">Supabase Platform</a>.</p>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-10" data-step="10" data-title="Proyecto Supabase en la nube">
+        <span class="track-badge supabase">BLOQUE SUPABASE CLOUD · 2 DE 4</span>
+        <h1>Crear y enlazar Supabase Cloud</h1>
+        <p class="lead">A diferencia del runtime Docker original, esta versión se despliega en la red global de Supabase para que cualquier persona pueda reproducir el laboratorio con su propio proyecto.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Primero usa el Dashboard de Supabase en el navegador para crear un proyecto alojado y obtener su <b>Reference ID</b>. Después abre una terminal en <code>IATinyFish/</code> para instalar y ejecutar Supabase CLI. La CLI crea la carpeta local <code>supabase/</code> y enlaza esa carpeta con el proyecto que acabas de crear en la nube.</p></div>
+
+        <section>
+          <h2>1. Crea el proyecto remoto</h2>
+          <p>Una cuenta puede administrar varios proyectos. Para esta práctica crea uno propio: así los secretos, invocaciones y despliegues del laboratorio quedan agrupados. El proyecto vive en Supabase Cloud; no es una carpeta de tu computadora. Más adelante <code>YOUR_PROJECT_REF</code> identificará ese proyecto en la URL pública de la función.</p>
+          <ol>
+            <li>En el Dashboard pulsa <b>New project</b>. Si aún no tienes organización, crea una personal; si ya tienes varias, selecciona explícitamente la que será propietaria.</li>
+            <li>Elige el plan gratuito cuando esté disponible para tu cuenta y revisa sus límites antes de continuar.</li>
+            <li>Asigna un nombre reconocible como <code>tinyprice-codelab</code>.</li>
+            <li>Genera una contraseña de base de datos distinta de la contraseña del Dashboard y guárdala en un gestor. Aunque este laboratorio no crea tablas, el proyecto exige esa credencial.</li>
+            <li>Elige una región cercana a los usuarios previstos. La región queda ligada al proyecto; cambiarla después normalmente implica crear otro proyecto y migrar.</li>
+            <li>Pulsa <b>Create new project</b> y espera hasta que los servicios aparezcan saludables.</li>
+            <li>Abre <b>Project Settings → General</b> o ejecuta <code>npx supabase projects list</code>. Copia el <b>Reference ID</b>; lo llamaremos <code>YOUR_PROJECT_REF</code>.</li>
+          </ol>
+          <div class="expected-result"><b>Resultado esperado</b><span>Dashboard abierto en <code>tinyprice-codelab</code>, proyecto saludable y un Reference ID corto copiado sin espacios.</span></div>
+          <aside class="callout note"><b>No necesitamos una tabla</b><p>Este codelab usa Supabase como backend de función y almacén de secretos. No persiste búsquedas ni ofertas en Postgres.</p></aside>
+          <aside class="callout danger"><b>Tres credenciales diferentes</b><p>No confundas la contraseña del Dashboard, la contraseña de la base de datos y <code>TINYFISH_API_KEY</code>. Ninguna debe aparecer en el repositorio ni en capturas. <code>YOUR_PROJECT_REF</code> y la URL pública sí pueden estar en la app.</p></aside>
+        </section>
+
+        <section>
+          <h2>2. Instala la CLI</h2>
+          <p>Ahora cambia del navegador a la terminal de <code>IATinyFish/</code>. La CLI es la herramienta que enviará los archivos locales a tu proyecto alojado. Este proyecto Android aún no tiene un <code>package.json</code>, por lo que primero crearás ese archivo para registrar la herramienta de Supabase. Es independiente de Gradle y no se incluye en el APK.</p>
+          <p>Antes de instalar, añade <code>node_modules/</code> a <code>.gitignore</code> si utilizas Git: esa carpeta contiene paquetes descargados y no debe versionarse. Conserva <code>package.json</code> y <code>package-lock.json</code>, que documentan la instalación. Después ejecuta cada línea en la terminal y espera a que termine antes de continuar:</p>
+          <pre><code class="language-shell">npm init -y
+npm install --save-dev supabase
+npx supabase --version</code></pre>
+          <p><code>npm init -y</code> crea <code>package.json</code>; <code>npm install</code> registra la CLI como dependencia de desarrollo; <code>npx</code> ejecuta esa copia local. Comprueba que el último comando muestra un número de versión, no un error. Los siguientes comandos de Supabase se ejecutan en la misma carpeta.</p>
+        </section>
+
+        <section>
+          <h2>3. Inicializa y enlaza</h2>
+          <p>Ejecuta los comandos en el orden mostrado. <code>login</code> autoriza la CLI para trabajar con tu cuenta; <code>init</code> prepara los archivos locales; <code>projects list</code> permite comprobar que ves el proyecto correcto; <code>link</code> asocia la carpeta actual con ese proyecto. Sustituye <code>YOUR_PROJECT_REF</code> por el identificador que copiaste del Dashboard.</p>
+          <pre><code class="language-shell">npx supabase login
+npx supabase init
+npx supabase projects list
+npx supabase link --project-ref YOUR_PROJECT_REF</code></pre>
+          <p><code>supabase login</code> abre un flujo de autenticación. <code>link</code> vincula esta carpeta con el proyecto remoto seleccionado.</p>
+          <aside class="callout warning"><b>Revisa el proyecto antes de enlazar</b><p>Si tienes acceso a varias organizaciones, confirma nombre y referencia. Un despliegue posterior modifica el proyecto enlazado.</p></aside>
+        </section>
+
+        <section>
+          <h2>4. Configura la función pública del laboratorio</h2>
+          <p>Agrega al final de <code>supabase/config.toml</code>:</p>
+          <pre data-file="supabase/config.toml"><code class="language-toml">[functions.search-products]
+verify_jwt = false</code></pre>
+          <p>Esto permite que la app invoque el endpoint sin una sesión de Supabase. Es adecuado para el laboratorio, pero la URL será pública.</p>
+          <aside class="callout danger"><b>Antes de producción</b><p>Una función pública debe tener protección duradera: autenticación, rate limiting compartido, cuotas y monitoreo. El contador en memoria del próximo paso es didáctico; no se comparte entre instancias y se reinicia con los cold starts.</p></aside>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>Existe <code>supabase/config.toml</code>, la función está marcada con <code>verify_jwt = false</code> y la CLI confirma el proyecto enlazado.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-11" data-step="11" data-title="Crear la Edge Function">
+        <span class="track-badge supabase">BLOQUE SUPABASE CLOUD · 3 DE 4</span>
+        <h1>Crear la Edge Function <code>search-products</code></h1>
+        <p class="lead">La función alojada debe iniciar su propio servidor con <code>Deno.serve</code>. Esta es la adaptación clave respecto al enrutador local del proyecto original.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>En la terminal de <code>IATinyFish/</code>, genera la estructura de la función. Después edita <code>supabase/functions/search-products/index.ts</code> en tu editor. Ese archivo todavía es local: se ejecutará en Supabase Cloud cuando lo despliegues en el paso siguiente.</p></div>
+
+        <section>
+          <h2>1. Genera la función</h2>
+          <p>La carpeta <code>supabase/functions/search-products/</code> representa una función independiente. El nombre <code>search-products</code> aparecerá al final de su URL pública. En este momento solo estás creando el archivo que contiene su implementación.</p>
+          <pre><code class="language-shell">npx supabase functions new search-products</code></pre>
+          <p>Se crea <code>supabase/functions/search-products/index.ts</code>. Reemplaza su contenido por la implementación siguiente.</p>
+        </section>
+
+        <section>
+          <h2>2. Implementa validación, TinyFish y mapeo</h2>
+          <p>Lee el código por tramos antes de copiarlo. Primero recibe y valida la consulta que llegará desde Android. Luego lee <code>TINYFISH_API_KEY</code> del entorno de Supabase y consulta TinyFish. Por último convierte cada resultado al formato <code>offers</code> que espera la app. Si alguna etapa falla, devuelve un código HTTP y un mensaje controlado para poder diagnosticarla.</p>
+          <pre data-file="supabase/functions/search-products/index.ts"><code class="language-typescript">const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Content-Type": "application/json; charset=utf-8",
+};
+
+const requestTimes = new Map&lt;string, number[]&gt;();
+const MAX_REQUESTS_PER_MINUTE = 20;
+
+function json(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), { status, headers: corsHeaders });
+}
+
+function isRateLimited(request: Request) {
+  const now = Date.now();
+  const key = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    ?? "anonymous";
+  const recent = (requestTimes.get(key) ?? [])
+    .filter((timestamp) =&gt; timestamp &gt; now - 60_000);
+
+  if (recent.length &gt;= MAX_REQUESTS_PER_MINUTE) {
+    requestTimes.set(key, recent);
+    return true;
+  }
+  recent.push(now);
+  requestTimes.set(key, recent);
+  return false;
+}
+
+function offerFromResult(
+  result: Record&lt;string, unknown&gt;,
+  position: number,
+  query: string,
+) {
+  const rawUrl = typeof result.url === "string" ? result.url : "";
+  let sourceUrl = "";
+  const siteName = typeof result.site_name === "string" ? result.site_name : "";
+  let store = siteName;
+  try {
+    const parsedUrl = new URL(rawUrl);
+    if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
+      sourceUrl = parsedUrl.toString();
+      store ||= parsedUrl.hostname.replace(/^www\./, "");
+    }
+  } catch {
+    store ||= "Fuente web";
+  }
+
+  return {
+    id: `${position}-${sourceUrl || query}`,
+    store,
+    productName: typeof result.title === "string" ? result.title : query,
+    price: "Ver en fuente",
+    originalPrice: null,
+    shipping: "Consulta en tienda",
+    delivery: "Disponibilidad por confirmar",
+    rating: "—",
+    sourceUrl,
+    summary: typeof result.snippet === "string"
+      ? result.snippet
+      : "Resultado encontrado en la web.",
+    tags: ["Resultado web"],
+    isBestValue: false,
+  };
+}
+
+Deno.serve(async (request) =&gt; {
+  if (request.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+  if (request.method !== "POST") {
+    return json({ error: "Usa una solicitud POST para buscar." }, 405);
+  }
+  if (isRateLimited(request)) {
+    return json({ error: "Demasiadas búsquedas. Inténtalo en un minuto." }, 429);
+  }
+
+  let query = "";
+  try {
+    const body = await request.json();
+    query = typeof body?.query === "string" ? body.query.trim() : "";
+  } catch {
+    return json({ error: "El cuerpo debe ser JSON válido." }, 400);
+  }
+  if (query.length &lt; 2 || query.length &gt; 200) {
+    return json({ error: "La búsqueda debe tener entre 2 y 200 caracteres." }, 400);
+  }
+
+  const apiKey = Deno.env.get("TINYFISH_API_KEY");
+  if (!apiKey) {
+    return json({
+      code: "TINYFISH_NOT_CONFIGURED",
+      error: "La búsqueda en vivo aún no está configurada.",
+    }, 503);
+  }
+
+  const searchUrl = new URL("https://api.search.tinyfish.ai");
+  searchUrl.searchParams.set("query", query);
+  searchUrl.searchParams.set("purpose", "Encontrar páginas de compra y ofertas relevantes.");
+  searchUrl.searchParams.set("location", "EC");
+  searchUrl.searchParams.set("language", "es");
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() =&gt; controller.abort(), 15_000);
+    const response = await fetch(searchUrl, {
+      headers: { "X-API-Key": apiKey, "Accept": "application/json" },
+      signal: controller.signal,
+    }).finally(() =&gt; clearTimeout(timeout));
+
+    if (!response.ok) {
+      console.error("TinyFish search failed", { status: response.status });
+      return json({ error: "No fue posible consultar las fuentes web ahora." }, 502);
+    }
+
+    const payload = await response.json();
+    const results = Array.isArray(payload.results) ? payload.results : [];
+    return json({
+      query,
+      offers: results.slice(0, 10).map((result, index) =&gt;
+        offerFromResult(result, index + 1, query)
+      ),
+      searchedAt: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("TinyFish request could not be completed", error);
+    return json({ error: "La búsqueda web no está disponible en este momento." }, 502);
+  }
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>3. Entiende CORS y la frontera de seguridad</h2>
+          <p>Los encabezados CORS permiten invocaciones desde navegadores. Una app Android nativa no depende de la política CORS del navegador, y <code>Access-Control-Allow-Origin: *</code> no autentica ni protege el endpoint.</p>
+          <ul class="check-list">
+            <li><code>verify_jwt = false</code> significa que cualquier cliente que conozca la URL puede invocar la función.</li>
+            <li>La validación conserva únicamente URLs <code>http</code> o <code>https</code> antes de enviarlas a Android.</li>
+            <li>La clave de TinyFish nunca aparece en la respuesta ni en mensajes de error.</li>
+            <li>Para producción, exige una identidad y aplica límites por usuario en almacenamiento compartido.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>4. Comprende los códigos HTTP</h2>
+          <table>
+            <thead><tr><th>Código</th><th>Cuándo aparece</th><th>Qué debe hacer Android</th></tr></thead>
+            <tbody>
+              <tr><td><code>200</code></td><td>Búsqueda procesada, incluso con cero resultados.</td><td>Mostrar lista o estado vacío.</td></tr>
+              <tr><td><code>400</code></td><td>JSON inválido o consulta fuera de rango.</td><td>Mostrar el mensaje recibido.</td></tr>
+              <tr><td><code>405</code></td><td>Método distinto de POST.</td><td>Corregir el cliente.</td></tr>
+              <tr><td><code>429</code></td><td>Demasiadas solicitudes.</td><td>Invitar a esperar.</td></tr>
+              <tr><td><code>502</code></td><td>TinyFish falló o no respondió.</td><td>Permitir reintento.</td></tr>
+              <tr><td><code>503</code></td><td>Falta el secreto.</td><td>Revisar configuración.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>5. Revisa el límite didáctico</h2>
+          <p>El <code>Map</code> vive solamente en una instancia de la función. Dos instancias no comparten contadores y un reinicio borra la memoria.</p>
+          <aside class="callout danger"><b>Para una app pública</b><p>Usa Supabase Auth, un contador distribuido o un gateway con rate limiting. Configura cuotas por usuario, alertas y límites de gasto en el proveedor externo.</p></aside>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>El archivo contiene exactamente un <code>Deno.serve</code>, nunca devuelve la clave y todas las respuestas usan JSON coherente.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-12" data-step="12" data-title="Secreto y despliegue">
+        <span class="track-badge supabase">BLOQUE SUPABASE CLOUD · 4 DE 4</span>
+        <h1>Guardar el secreto, desplegar y probar</h1>
+        <p class="lead">Recupera la API key desde tu gestor de contraseñas y colócala en el almacén de secretos de producción. Después despliega la función y prueba la URL pública antes de activar la búsqueda remota en Android.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Guarda <code>TINYFISH_API_KEY</code> en <b>Supabase Dashboard → Edge Functions → Secrets</b> desde el navegador, o usa la alternativa de CLI indicada abajo desde la terminal de <code>IATinyFish/</code>. El despliegue y las pruebas con <code>curl</code> se hacen en esa terminal. Comprueba los resultados en el Dashboard y todavía no cambies la configuración de Android.</p></div>
+
+        <section>
+          <h2>1. Configura <code>TINYFISH_API_KEY</code></h2>
+          <p>Un secreto es un valor que la función puede leer al ejecutarse, pero que no debe viajar dentro del APK ni quedar escrito en el repositorio. Elige una de las dos rutas de abajo. Si usas el Dashboard, pega allí la clave que guardaste al completar TinyFish. Si usas la CLI, crea el archivo privado indicado y verifica que Git lo ignore antes de colocar la clave. Para comenzar, la ruta del Dashboard requiere menos preparación.</p>
+          <p>Elige una de estas dos rutas:</p>
+          <div class="choice-grid">
+            <div><h3>Dashboard</h3><ol><li>Abre Edge Functions → Secrets.</li><li>Agrega <code>TINYFISH_API_KEY</code>.</li><li>Pega el valor y guarda.</li></ol></div>
+            <div><h3>CLI, sin dejar la clave en el historial</h3><ol><li>En el archivo <code>.gitignore</code> de <code>IATinyFish/</code>, agrega una línea: <code>supabase/.env.production.local</code>.</li><li>Crea <code>supabase/.env.production.local</code> y escribe una línea: <code>TINYFISH_API_KEY=YOUR_TINYFISH_API_KEY</code>. Sustituye el valor por tu clave real solo en ese archivo.</li><li>Antes de continuar, comprueba desde la terminal que el archivo está ignorado con <code>git check-ignore supabase/.env.production.local</code>, si trabajas con Git.</li><li>En la terminal de <code>IATinyFish/</code>, ejecuta los dos comandos siguientes. No copies el contenido del archivo como si fueran comandos.</li></ol><pre><code class="language-shell">npx supabase secrets set --env-file supabase/.env.production.local
+npx supabase secrets list</code></pre></div>
+          </div>
+          <aside class="callout note"><b>Los secretos se aplican sin redesplegar</b><p>Supabase hace que el nuevo valor esté disponible para las funciones desplegadas. La lista muestra nombres y huellas, no debe revelar el valor.</p></aside>
+        </section>
+
+        <section>
+          <h2>2. Despliega la función</h2>
+          <p>Desplegar significa enviar el archivo local <code>index.ts</code> a tu proyecto de Supabase para que pueda responder por Internet. La URL incluye tu <code>PROJECT_REF</code> y el nombre <code>search-products</code>. Anótala: primero la probarás desde la terminal y luego configurarás Android con su parte base.</p>
+          <pre><code class="language-shell">npx supabase functions deploy search-products</code></pre>
+          <p>La URL resultante sigue este patrón:</p>
+          <pre><code class="language-text">https://YOUR_PROJECT_REF.supabase.co/functions/v1/search-products</code></pre>
+        </section>
+
+        <section>
+          <h2>3. Prueba la función alojada</h2>
+          <p>Esta prueba separa backend y app. Envía una consulta directamente a Supabase desde la terminal. Si recibes una lista <code>offers</code>, sabes que Supabase pudo leer el secreto, llamar a TinyFish y transformar la respuesta; cualquier problema posterior estará en la integración con Android.</p>
+          <pre><code class="language-shell">curl --request POST \
+  'https://YOUR_PROJECT_REF.supabase.co/functions/v1/search-products' \
+  --header 'Content-Type: application/json' \
+  --data '{"query":"Nintendo Switch OLED"}'</code></pre>
+          <p>Como <code>verify_jwt = false</code>, esta variante del laboratorio no necesita <code>apikey</code> ni <code>Authorization</code>. Si recibes 401, la configuración no fue aplicada o la función fue desplegada con verificación habilitada.</p>
+        </section>
+
+        <section>
+          <h2>4. Prueba entradas incorrectas</h2>
+          <div class="test-cases">
+            <div><code>{}</code><b>400</b><span>Consulta fuera de rango.</span></div>
+            <div><code>{"query":"x"}</code><b>400</b><span>Menos de 2 caracteres.</span></div>
+            <div><code>GET</code><b>405</b><span>Método no permitido.</span></div>
+            <div><code>20+ solicitudes</code><b>429</b><span>Límite didáctico por instancia.</span></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>5. Observa invocaciones y logs</h2>
+          <ol>
+            <li>En Supabase abre <b>Edge Functions → search-products</b>.</li>
+            <li>En <b>Invocations</b>, confirma método, estado y duración de cada prueba.</li>
+            <li>En <b>Logs</b>, filtra por nivel o momento para localizar errores de la función.</li>
+            <li>Registra solo datos operativos: código, duración y un identificador de solicitud. No registres claves, encabezados completos ni consultas con datos personales.</li>
+          </ol>
+          <pre><code class="language-typescript">const requestId = crypto.randomUUID();
+console.log("search completed", {
+  requestId,
+  status: 200,
+  resultCount: results.length,
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>6. Practica la rotación del secreto</h2>
+          <ol>
+            <li>Crea una nueva API key en TinyFish sin revocar todavía la actual.</li>
+            <li>Actualiza <code>TINYFISH_API_KEY</code> en Supabase y ejecuta una búsqueda de control.</li>
+            <li>Cuando la prueba devuelva <code>200</code>, revoca la clave anterior en TinyFish.</li>
+            <li>Si una clave llegó a Git, revocarla es obligatorio: borrarla del último commit no la elimina del historial ni de copias existentes.</li>
+          </ol>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>El POST devuelve <code>200</code>, puedes localizar la invocación en el Dashboard y ninguna respuesta, archivo o log contiene <code>TINYFISH_API_KEY</code>.</p></div></div>
+          <aside class="callout info"><b>Transición a la app</b><p>Hasta aquí probaste la función sin Android. En el próximo bloque regresarás a Android Studio y compilarás la app con la URL base del proyecto alojado. La API key permanecerá en Supabase; Android solo recibirá resultados y enlaces.</p></aside>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-13" data-step="13" data-title="Conectar Android con la nube">
+        <span class="track-badge android">INTEGRACIÓN ANDROID ↔ SUPABASE</span>
+        <h1>Conectar la app al endpoint alojado</h1>
+        <p class="lead">Con el backend ya verificado, activa <code>RemoteDealsRepository</code> al compilar y entrega la base de la URL de Supabase.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Vuelve a la terminal de <code>IATinyFish/</code> para compilar con las propiedades remotas. Después abre Android Studio y ejecuta la app en el emulador. Si necesitas revisar una petición, consulta las invocaciones en el Dashboard de Supabase. En este paso no copies la clave de TinyFish al proyecto Android.</p></div>
+
+        <section>
+          <h2>1. Compila con propiedades remotas</h2>
+          <p>En el bloque Android dejamos listo un repositorio local y otro remoto. La propiedad <code>useRemoteDeals=true</code> selecciona el remoto al compilar; <code>edgeRuntimeBaseUrl</code> le indica a qué proyecto de Supabase dirigirse. Sustituye solo <code>YOUR_PROJECT_REF</code> por el identificador de tu proyecto y ejecuta el comando desde la carpeta que contiene <code>gradlew</code>.</p>
+          <pre><code class="language-shell">./gradlew :app:assembleDebug \
+  -PuseRemoteDeals=true \
+  -PedgeRuntimeBaseUrl=https://YOUR_PROJECT_REF.supabase.co/functions/v1</code></pre>
+          <p>Observa que la propiedad contiene la base y no el nombre de la función. El repositorio agrega <code>/search-products</code>.</p>
+          <aside class="callout note"><b>Retrofit necesita una URL base válida</b><p>Puedes escribir <code>.../functions/v1</code> o <code>.../functions/v1/</code>: <code>ensureTrailingSlash()</code> normaliza el valor antes de construir Retrofit. No agregues <code>search-products</code> aquí porque ya está en <code>@POST</code>.</p></aside>
+        </section>
+
+        <section>
+          <h2>2. Ejecuta desde Android Studio</h2>
+          <p>Para que el botón Run use las mismas propiedades:</p>
+          <p>Compilar desde la terminal crea el APK, pero pulsar <b>Run</b> en Android Studio puede iniciar otra compilación. Por eso ambos caminos deben usar la misma configuración; de lo contrario podrías ver otra vez los datos de demostración y pensar que el servidor falló.</p>
+          <ol>
+            <li>Abre <b>Run → Edit Configurations</b>.</li>
+            <li>Selecciona la configuración de la app.</li>
+            <li>Agrega a las opciones de Gradle las dos propiedades anteriores.</li>
+            <li>Aplica, reconstruye y ejecuta.</li>
+          </ol>
+          <p>Otra opción es colocar valores no secretos en <code>gradle.properties</code> local:</p>
+          <pre><code class="language-properties">useRemoteDeals=true
+edgeRuntimeBaseUrl=https://YOUR_PROJECT_REF.supabase.co/functions/v1</code></pre>
+          <aside class="callout info"><b>La URL de función no es un secreto</b><p>Puede vivir en la configuración del cliente. Lo que debe permanecer exclusivamente en Supabase es la clave privada de TinyFish.</p></aside>
+        </section>
+
+        <section>
+          <h2>3. Recorre la app</h2>
+          <ol>
+            <li>Abre TinyPrice y confirma la pantalla de descubrimiento.</li>
+            <li>Busca <code>Nintendo Switch OLED</code>.</li>
+            <li>Observa el estado “Buscando ofertas…”.</li>
+            <li>Confirma que el subtítulo dice “encontrados en la web”, no “de demostración”.</li>
+            <li>Abre una tarjeta y toca <b>Abrir fuente web</b>.</li>
+            <li>Regresa a la app y prueba una segunda consulta.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>4. Inspecciona sin filtrar secretos</h2>
+          <p>Puedes registrar el código HTTP y el tiempo de respuesta durante desarrollo, pero evita imprimir encabezados completos, cuerpos que contengan datos sensibles o secretos.</p>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint end-to-end</b><p>Android → Supabase → TinyFish → Supabase → Android completa el recorrido. El resultado abre una URL real y el APK no contiene la clave de TinyFish.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-14" data-step="14" data-title="Probar y diagnosticar">
+        <span class="track-badge verify">CALIDAD Y DIAGNÓSTICO</span>
+        <h1>Probar por capas y resolver fallos</h1>
+        <p class="lead">Cuando algo falla, prueba desde la dependencia más externa hacia la UI. Así sabrás qué capa reparar sin cambiar varias cosas a la vez.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Usa la terminal de <code>IATinyFish/</code> para las pruebas de compilación y los tests locales; usa el emulador para pruebas de interfaz; consulta <b>Edge Functions → Invocations/Logs</b> en el Dashboard para errores del backend. La matriz de abajo te ayuda a elegir el primer lugar donde mirar según el síntoma.</p></div>
+
+        <section>
+          <h2>Matriz de diagnóstico</h2>
+          <p>Empieza por reproducir el fallo una sola vez y anota qué observaste: código HTTP, pantalla mostrada y si la solicitud apareció en Supabase. Si la función no recibe la petición, investiga Android y la URL. Si la recibe pero responde con error, revisa la función y su comunicación con TinyFish. Este orden evita cambiar varias capas a ciegas.</p>
+          <table class="diagnostic-table">
+            <thead><tr><th>Síntoma</th><th>Causa probable</th><th>Comprobación</th><th>Corrección</th></tr></thead>
+            <tbody>
+              <tr><td>401 desde Supabase</td><td><code>verify_jwt</code> activo.</td><td>Revisa <code>config.toml</code> y el despliegue.</td><td>Configura la función pública del codelab y redespliega.</td></tr>
+              <tr><td>503 <code>TINYFISH_NOT_CONFIGURED</code></td><td>Falta el secreto.</td><td><code>supabase secrets list</code>.</td><td>Agrega <code>TINYFISH_API_KEY</code>.</td></tr>
+              <tr><td>502 en la función</td><td>TinyFish rechazó o agotó tiempo.</td><td>Revisa logs de Edge Functions.</td><td>Valida clave, cuota y conectividad.</td></tr>
+              <tr><td>Android no conecta</td><td>Base URL incorrecta o sin Internet.</td><td>Imprime solo endpoint y status.</td><td>Verifica permiso y <code>functions/v1</code>.</td></tr>
+              <tr><td>Siguen datos demo</td><td>BuildConfig remoto desactivado.</td><td>Revisa la variante compilada.</td><td>Compila con <code>-PuseRemoteDeals=true</code>.</td></tr>
+              <tr><td>Lista vacía con 200</td><td>TinyFish no devolvió resultados.</td><td>Observa <code>offers: []</code>.</td><td>Prueba una consulta más específica.</td></tr>
+              <tr><td>La fuente no abre</td><td>URL vacía o no HTTP.</td><td>Revisa <code>sourceUrl</code>.</td><td>Oculta la acción para URLs inválidas.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Pruebas automatizadas del ViewModel</h2>
+          <p>Inyecta un repositorio falso y controla <code>Dispatchers.Main</code> con <code>kotlinx-coroutines-test</code>. Cubre al menos consulta vacía, éxito y error remoto.</p>
+          <p>Estas pruebas se ejecutan en tu computadora y no requieren un emulador. El repositorio falso devuelve respuestas previsibles para comprobar las decisiones del ViewModel: cuándo empieza la carga, qué muestra si llegan resultados y qué mensaje deja si falla la búsqueda.</p>
+          <pre data-file="DealsViewModelTest.kt"><code class="language-kotlin">@OptIn(ExperimentalCoroutinesApi::class)
+class DealsViewModelTest {
+    @get:Rule val mainDispatcherRule = MainDispatcherRule()
+
+    @Test fun validQueryPublishesResults() = runTest {
+        val offer = sampleOffer()
+        val viewModel = DealsViewModel(
+            FakeDealsRepository(result = listOf(offer)),
+        )
+
+        viewModel.onEvent(DealsEvent.QueryChanged("Switch OLED"))
+        viewModel.onEvent(DealsEvent.SubmitSearch)
+        advanceUntilIdle()
+
+        assertFalse(viewModel.state.value.isLoading)
+        assertEquals(listOf(offer), viewModel.state.value.offers)
+    }
+}</code></pre>
+          <p>La referencia incluye también <code>MainDispatcherRule</code>, el repositorio falso y casos para validación y fallo. Ejecuta:</p>
+          <pre><code class="language-shell">./gradlew :app:testDebugUnitTest</code></pre>
+        </section>
+
+        <section>
+          <h2>Prueba instrumentada de Compose</h2>
+          <p>Esta prueba sí necesita un emulador o dispositivo encendido, porque comprueba componentes de la interfaz Android. Ejecútala después de confirmar que la app compila y que el dispositivo aparece conectado.</p>
+          <pre data-file="DealsAppTest.kt"><code class="language-kotlin">class DealsAppTest {
+    @get:Rule val composeRule = createComposeRule()
+
+    @Test fun startScreenShowsSearchAndSuggestion() {
+        composeRule.setContent {
+            IATinyFishTheme {
+                DealsApp(state = DealsUiState(), onEvent = {})
+            }
+        }
+
+        composeRule.onNodeWithText("Buscar").assertIsDisplayed()
+        composeRule.onNodeWithText("Nintendo Switch OLED").assertIsDisplayed()
+    }
+}</code></pre>
+          <pre><code class="language-shell">./gradlew :app:connectedDebugAndroidTest</code></pre>
+          <aside class="callout note"><b>Ejecuta en un emulador</b><p>Los tests de Compose instrumentados necesitan un dispositivo conectado. Los tests del ViewModel se ejecutan localmente y no necesitan Android.</p></aside>
+        </section>
+
+        <section>
+          <h2>Pruebas manuales mínimas</h2>
+          <div class="qa-grid">
+            <label><input type="checkbox" data-qa="empty"> Buscar sin texto muestra validación.</label>
+            <label><input type="checkbox" data-qa="success"> Consulta válida muestra carga y resultados.</label>
+            <label><input type="checkbox" data-qa="detail"> Tarjeta abre detalle correcto.</label>
+            <label><input type="checkbox" data-qa="back"> Atrás vuelve sin cerrar la app.</label>
+            <label><input type="checkbox" data-qa="source"> Fuente web abre fuera de la app.</label>
+            <label><input type="checkbox" data-qa="theme"> Claro y oscuro mantienen contraste.</label>
+            <label><input type="checkbox" data-qa="rotate"> Rotación no rompe la composición.</label>
+            <label><input type="checkbox" data-qa="offline"> Sin red muestra error y reintento.</label>
+          </div>
+        </section>
+
+        <section>
+          <h2>Prueba de compilación</h2>
+          <pre><code class="language-shell">./gradlew :app:assembleDebug \
+  -PuseRemoteDeals=true \
+  -PedgeRuntimeBaseUrl=https://YOUR_PROJECT_REF.supabase.co/functions/v1
+
+./gradlew :app:testDebugUnitTest</code></pre>
+          <p>Si cambiaste dependencias, ejecuta también los tests instrumentados en un emulador antes de publicar.</p>
+        </section>
+
+        <section>
+          <h2>Lista de seguridad</h2>
+          <ul class="check-list">
+            <li>El repositorio no contiene archivos <code>.env</code> con valores reales.</li>
+            <li>El APK no contiene <code>TINYFISH_API_KEY</code>.</li>
+            <li>Los logs no muestran claves ni encabezados completos.</li>
+            <li>La función valida longitud y tipo de entrada.</li>
+            <li>Los errores hacia el cliente son genéricos; el detalle queda en logs privados.</li>
+            <li>La app conserva la URL de la fuente para verificación.</li>
+          </ul>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint de calidad</b><p>Completaste los ocho casos manuales, la compilación termina bien y puedes ubicar cualquier error en Android, Supabase o TinyFish.</p></div></div>
+        </section>
+      </article>
+
+      <article class="lesson-page" id="step-15" data-step="15" data-title="Publicar y continuar">
+        <span class="track-badge finish">FINAL DEL CODELAB</span>
+        <h1>Terminaste TinyPrice</h1>
+        <p class="lead">Construiste una experiencia completa con una frontera de seguridad clara: Android se ocupa de interacción y estado; Supabase protege secretos y adapta el contrato; TinyFish aporta resultados web actuales.</p>
+        <div class="work-context"><b>Dónde trabajar</b><p>Este paso sirve para revisar el resultado y decidir cómo continuar. La publicación en Play Console es una ruta futura que se realiza desde Android Studio y el portal de Google Play; no es necesaria para completar el laboratorio ni para comprobar el flujo Android → Supabase → TinyFish.</p></div>
+
+        <section>
+          <div class="completion-card">
+            <span class="completion-icon">✓</span>
+            <div><h2>Recorrido completado</h2><p>Marca este paso como terminado para dejar el progreso en 100%.</p></div>
+            <button class="primary-button" id="completeCodelab">Marcar como completado</button>
+          </div>
+        </section>
+
+        <section>
+          <h2>Lo que implementaste</h2>
+          <p>Vuelve mentalmente al inicio: primero comprobaste qué entrega TinyFish, luego hiciste una app que funciona con datos locales y por último añadiste una función en la nube. El mismo repositorio Android pudo cambiar de fuente sin rehacer su interfaz. Esa separación es la idea principal del ejercicio.</p>
+          <ul class="check-list">
+            <li>UI Compose con descubrimiento, búsqueda, carga, error, lista y detalle.</li>
+            <li>Estado inmutable y eventos con ViewModel + StateFlow.</li>
+            <li>Repositorios intercambiables para demo y búsqueda real.</li>
+            <li>Función TypeScript desplegada en Supabase Cloud.</li>
+            <li>Secreto de TinyFish fuera del APK.</li>
+            <li>Transformación de resultados y enlaces verificables.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Publica primero en una pista interna</h2>
+          <ol>
+            <li>Incrementa <code>versionCode</code> y revisa nombre, icono, permisos, textos legales y política de privacidad.</li>
+            <li>En Android Studio abre <b>Build → Generate Signed Bundle / APK</b> y elige <b>Android App Bundle</b>.</li>
+            <li>Crea o selecciona una upload key. Guarda el keystore y sus contraseñas fuera del repositorio y con una copia de respaldo protegida.</li>
+            <li>Genera la variante <b>release</b> y localiza el archivo <code>.aab</code>.</li>
+            <li>En Play Console crea la aplicación, configura Play App Signing y completa la ficha, Data safety y política de privacidad.</li>
+            <li>Sube el AAB a <b>Internal testing</b>, añade testers y valida instalación, búsqueda, apertura de fuente y errores antes de promover la versión.</li>
+          </ol>
+          <aside class="callout danger"><b>No publiques todavía el endpoint didáctico</b><p>Con <code>verify_jwt = false</code> cualquier persona puede consumir la función y abusar de la clave del proveedor. Para una distribución abierta, implementa autenticación, autorización, rate limiting compartido, límites de gasto y alertas antes de promover la app a producción.</p></aside>
+        </section>
+
+        <section>
+          <h2>Antes de una publicación real</h2>
+          <div class="next-grid">
+            <div><span>01</span><h3>Autenticación</h3><p>Activa Supabase Auth y exige identidad para controlar abuso por usuario.</p></div>
+            <div><span>02</span><h3>Rate limiting</h3><p>Mueve el contador a almacenamiento compartido o a un gateway.</p></div>
+            <div><span>03</span><h3>Observabilidad</h3><p>Mide latencia, errores, cuotas y coste sin registrar secretos.</p></div>
+            <div><span>04</span><h3>Extracción</h3><p>Si necesitas precio estructurado, añade una fase verificable de lectura de fuente.</p></div>
+            <div><span>05</span><h3>Persistencia de estado</h3><p>Usa <code>SavedStateHandle</code> si quieres conservar consulta y destino después de que el proceso sea recreado.</p></div>
+            <div><span>06</span><h3>Accesibilidad</h3><p>Valida semántica, tamaño de texto, objetivos táctiles y recorrido completo con TalkBack.</p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Código completo de referencia</h2>
+          <p>Los fragmentos anteriores explican cada decisión. Si quieres comparar tu resultado archivo por archivo, abre esta instantánea sin secretos:</p>
+          <ul class="resource-list">
+            <li><a href="reference/README.md" target="_blank">Cómo utilizar la referencia completa</a></li>
+            <li><a href="reference/android/app/src/main/java/com/apps/iatinyfish/presentation/deals/DealsApp.kt" target="_blank">Android · interfaz Compose completa</a></li>
+            <li><a href="reference/android/app/src/main/java/com/apps/iatinyfish/presentation/deals/DealsViewModel.kt" target="_blank">Android · estado y ViewModel</a></li>
+            <li><a href="reference/android/app/src/main/java/com/apps/iatinyfish/data/repository/RemoteDealsRepository.kt" target="_blank">Android · repositorio de red</a></li>
+            <li><a href="reference/android/app/src/test/java/com/apps/iatinyfish/presentation/deals/DealsViewModelTest.kt" target="_blank">Android · pruebas unitarias del ViewModel</a></li>
+            <li><a href="reference/supabase/functions/search-products/index.ts" target="_blank">Supabase Cloud · Edge Function completa</a></li>
+          </ul>
+          <div class="info-box"><b>Importante:</b> la carpeta <code>reference/</code> no contiene una clave real. Conserva <code>TINYFISH_API_KEY</code> únicamente como secreto alojado en Supabase.</div>
+        </section>
+
+        <section>
+          <h2>Fuentes técnicas consultadas</h2>
+          <p>Estas páginas son referencias externas y pueden cambiar con el tiempo:</p>
+          <ul class="resource-list">
+            <li><a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-coroutines-kotlin-playground" target="_blank" rel="noreferrer">Google Android Codelabs · referencia de experiencia</a></li>
+            <li><a href="https://developer.android.com/build/releases/agp-9-4-0-release-notes" target="_blank" rel="noreferrer">Android Developers · compatibilidad de AGP 9.4, Gradle y JDK</a></li>
+            <li><a href="https://github.com/android/skills/blob/main/README.md" target="_blank" rel="noreferrer">Android Developers · skills oficiales e instalación con Android CLI</a></li>
+            <li><a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/using-agent-skills.md" target="_blank" rel="noreferrer">Gemini CLI · descubrir, activar y administrar Agent Skills</a></li>
+            <li><a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/tutorials/skills-getting-started.md" target="_blank" rel="noreferrer">Gemini CLI · guía de inicio para skills del workspace</a></li>
+            <li><a href="https://supabase.com/docs/guides/functions/quickstart" target="_blank" rel="noreferrer">Supabase · Getting Started with Edge Functions</a></li>
+            <li><a href="https://supabase.com/docs/guides/local-development/cli/getting-started" target="_blank" rel="noreferrer">Supabase · instalación y uso de la CLI con npm</a></li>
+            <li><a href="https://supabase.com/docs/guides/functions/secrets" target="_blank" rel="noreferrer">Supabase · Environment variables and secrets</a></li>
+            <li><a href="https://supabase.com/docs/guides/functions/function-configuration" target="_blank" rel="noreferrer">Supabase · Function configuration</a></li>
+            <li><a href="https://supabase.com/docs/guides/functions/logging" target="_blank" rel="noreferrer">Supabase · Logging</a></li>
+            <li><a href="https://supabase.com/docs/guides/functions/auth" target="_blank" rel="noreferrer">Supabase · Securing Edge Functions</a></li>
+            <li><a href="https://www.tinyfish.ai/search" target="_blank" rel="noreferrer">TinyFish · Search API overview</a></li>
+            <li><a href="https://developer.android.com/develop/ui/compose/state" target="_blank" rel="noreferrer">Android · State and Jetpack Compose</a></li>
+            <li><a href="https://developer.android.com/studio/publish/app-signing" target="_blank" rel="noreferrer">Android · Sign your app</a></li>
+            <li><a href="https://developer.android.com/studio/publish/upload-bundle" target="_blank" rel="noreferrer">Android · Upload an app bundle</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Variación rápida: volver a la demo</h2>
+          <p>Para enseñar la UI sin consumir red, compila sin propiedades:</p>
+          <pre><code class="language-shell">./gradlew :app:assembleDebug</code></pre>
+          <p><code>DealsRepositoryProvider</code> seleccionará <code>PreviewDealsRepository</code>. Esta salida es útil para talleres sin conectividad.</p>
+        </section>
+      </article>
+
+      <footer class="lesson-controls" aria-label="Navegación entre pasos">
+        <button class="secondary-button" id="prevButton">← Anterior</button>
+        <div class="control-center">
+          <label><input type="checkbox" id="doneCheckbox"> Marcar paso como completado</label>
+          <span id="stepCounter">1 / 16</span>
+        </div>
+        <button class="primary-button" id="nextButton">Siguiente →</button>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Código copiado</div>
+  <script src="app.js"></script>
+</body>
+</html>
