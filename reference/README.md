@@ -17,7 +17,7 @@ Esta carpeta complementa el codelab con una copia completa y sincronizada de los
 
 El directorio es una instantánea de fuentes, no un segundo proyecto ejecutable: el wrapper de Gradle y los archivos generados los crea Android Studio.
 
-Ejecuta `./gradlew :app:testDebugUnitTest` para los tests del ViewModel y `./gradlew :app:connectedDebugAndroidTest` con un emulador para la prueba Compose.
+Ejecuta `./gradlew :app:testDebugUnitTest` para los tests del ViewModel y `./gradlew :app:connectedDebugAndroidTest` con un teléfono físico autorizado o un emulador para la prueba Compose.
 
 ## Supabase alojado
 

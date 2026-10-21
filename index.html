@@ -92,7 +92,7 @@
         <section>
           <h2>Lo que vas a construir</h2>
           <p>TinyPrice recibe una consulta, muestra un estado de carga, presenta hasta diez resultados y conserva el enlace de cada fuente. El usuario puede abrir un resultado, revisar sus detalles y saltar al sitio original.</p>
-          <p>Trabajarás en tres lugares distintos. En el navegador crearás las cuentas y configurarás los servicios alojados. En Android Studio escribirás la aplicación Kotlin y la ejecutarás en un emulador. En la terminal, situada en la carpeta del proyecto, compilarás la app y desplegarás la función de Supabase. El codelab es la guía: los comandos no se ejecutan dentro de esta página.</p>
+          <p>Trabajarás en tres lugares distintos. En el navegador crearás las cuentas y configurarás los servicios alojados. En Android Studio escribirás la aplicación Kotlin y la ejecutarás en un emulador o en tu teléfono físico. En la terminal, situada en la carpeta del proyecto, compilarás la app y desplegarás la función de Supabase. El codelab es la guía: los comandos no se ejecutan dentro de esta página.</p>
           <div class="feature-grid">
             <div class="feature-card"><span>⌕</span><h3>Búsqueda real</h3><p>TinyFish devuelve títulos, fragmentos y URLs actuales.</p></div>
             <div class="feature-card"><span>◫</span><h3>UI declarativa</h3><p>Compose representa inicio, carga, resultados, error y detalle.</p></div>
@@ -140,9 +140,9 @@
             <div><b>Cuenta de Supabase</b><span>Para alojar la función global.</span></div>
             <div><b>Node.js + Supabase CLI</b><span>Para enlazar y desplegar desde terminal.</span></div>
             <div><b>Gemini CLI (opcional)</b><span>Para seguir la práctica de descubrimiento y activación de la skill.</span></div>
-            <div><b>Emulador o dispositivo</b><span>Android 16/API 36 o posterior, según este proyecto.</span></div>
+            <div><b>Emulador o dispositivo físico</b><span>Android 6.0/API 23 o posterior.</span></div>
           </div>
-          <aside class="callout note"><b>Nota sobre las versiones</b><p>Este codelab reproduce la instantánea del proyecto: Kotlin 2.2.10, Android Gradle Plugin 9.4.1, Compose BOM 2026.02.01, <code>compileSdk 37</code> y <code>minSdk 36</code>. Si trabajas con otra versión, conserva un conjunto compatible en lugar de actualizar dependencias de forma aislada.</p></aside>
+          <aside class="callout note"><b>Nota sobre las versiones</b><p>Este codelab usa Kotlin 2.2.10, Android Gradle Plugin 9.4.1, Compose BOM 2026.02.01, <code>compileSdk 37</code> y <code>minSdk 23</code>. <code>compileSdk</code> es la plataforma que necesita tu computadora para compilar; <code>minSdk</code> es la versión mínima del teléfono o emulador donde puede instalarse la app. Conserva un conjunto de versiones compatible en lugar de actualizar dependencias de forma aislada.</p></aside>
         </section>
 
         <section>
@@ -227,7 +227,7 @@
         <span class="track-badge android">BLOQUE ANDROID · 1 DE 5</span>
         <h1>Preparar el entorno y la skill de Android</h1>
         <p class="lead">La API key de TinyFish continúa guardada fuera del proyecto y todavía no se usará. Ahora crea o abre el proyecto base, verifica las herramientas e instala la skill oficial <code>android-cli</code>. En los pasos siguientes construirás la app con datos de demostración.</p>
-        <div class="work-context"><b>Dónde trabajar</b><p>Abre Android Studio para revisar el SDK y crear un emulador. Abre una terminal en la carpeta <code>IATinyFish/</code> para ejecutar los comandos. La parte de Gemini CLI es una actividad de apoyo: la aplicación Android no necesita Gemini para funcionar.</p></div>
+        <div class="work-context"><b>Dónde trabajar</b><p>Abre Android Studio para revisar el SDK y crear el proyecto. Puedes probarlo con un emulador o con un dispositivo físico. Abre una terminal en la carpeta <code>IATinyFish/</code> para ejecutar los comandos. La parte de Gemini CLI es una actividad de apoyo: la aplicación Android no necesita Gemini para funcionar.</p></div>
 
         <section>
           <h2>1. Instala los componentes</h2>
@@ -236,11 +236,11 @@
             <li>Android SDK Platform 37.</li>
             <li>Android SDK Build-Tools correspondiente.</li>
             <li>Android SDK Platform-Tools.</li>
-            <li>Android Emulator y una imagen API 36 o superior.</li>
+            <li><b>Solo si usarás un emulador:</b> Android Emulator y una imagen del sistema API 23 o superior.</li>
           </ul>
-          <aside class="callout note"><b>Si solo tienes SDK 36</b><p>Puedes bajar temporalmente <code>compileSdk</code> y <code>targetSdk</code> al nivel disponible, siempre que el AGP instalado lo soporte. Para una reproducción exacta usa los valores del proyecto.</p></aside>
+          <aside class="callout note"><b>Emulador o teléfono físico</b><p>El emulador es opcional. Si usarás tu teléfono, activa <b>Opciones de desarrollador → Depuración USB</b>, conéctalo, acepta la huella RSA y selecciónalo en Android Studio. Debe tener Android 6.0/API 23 o superior. No necesitas instalar Android Emulator ni crear un dispositivo virtual.</p></aside>
           <h3>Abre o crea la carpeta de trabajo</h3>
-          <p>Si descargaste este repositorio, abre <code>IATinyFish/</code> en Android Studio; ya contiene un proyecto Android y el archivo <code>gradlew</code>. Si estás reproduciendo el codelab desde cero, elige <b>New Project → Empty Activity</b>, escribe <code>IATinyFish</code> como nombre y <code>com.apps.iatinyfish</code> como paquete, selecciona Kotlin y API 36 como mínimo, y espera la primera sincronización. Android Studio creará la carpeta <code>IATinyFish/</code> y el archivo <code>gradlew</code>. Trabaja siempre en esa misma carpeta durante los pasos siguientes.</p>
+          <p>Este codelab no entrega código fuente inicial: crearás tu propio proyecto. En Android Studio elige <b>New Project → Empty Activity</b>, escribe <code>IATinyFish</code> como nombre y <code>com.apps.iatinyfish</code> como paquete, selecciona Kotlin y API 23 como mínimo, y espera la primera sincronización. Android Studio creará la carpeta <code>IATinyFish/</code> y el archivo <code>gradlew</code>. Trabaja siempre en esa misma carpeta durante los pasos siguientes.</p>
         </section>
 
         <section>
@@ -249,7 +249,7 @@
           <p>La terminal puede ser la integrada en Android Studio o la de tu sistema operativo. Antes de ejecutar, confirma que estás dentro de <code>IATinyFish/</code>: allí debe encontrarse el archivo <code>gradlew</code>. Si no aparece, cambia a la carpeta correcta.</p>
           <pre><code class="language-shell">java -version
 ./gradlew --version</code></pre>
-          <p>El primer comando debe mostrar JDK 17 o superior. AGP 9.4 lo necesita para ejecutar la compilación, aunque el código de la app genere bytecode compatible con Java 11. El segundo comando muestra la versión del Gradle Wrapper de esa carpeta; al usar el proyecto de referencia descargará Gradle 9.6.0 si hace falta. Si creaste un proyecto vacío, Android Studio pudo generar otra versión: en el siguiente paso ajustarás el Wrapper para reproducir la referencia.</p>
+          <p>El primer comando debe mostrar JDK 17 o superior. AGP 9.4 lo necesita para ejecutar la compilación, aunque el código de la app genere bytecode compatible con Java 11. El segundo comando muestra la versión del Gradle Wrapper creado por Android Studio. Conserva las versiones generadas inicialmente y ajusta el proyecto solo cuando el codelab indique un cambio concreto.</p>
           <aside class="callout warning"><b>No compartas <code>local.properties</code></b><p>Ese archivo contiene la ruta del SDK de tu computadora. Android Studio lo genera para cada persona y debe permanecer fuera del control de versiones.</p></aside>
         </section>
 
@@ -287,7 +287,17 @@ android info</code></pre>
         </section>
 
         <section>
-          <h2>5. Instala <code>android-cli</code> dentro del proyecto</h2>
+          <h2>5. Instala Gemini CLI</h2>
+          <p>Gemini CLI es opcional: se usa únicamente para la actividad de skills y no forma parte de la app Android. Requiere Node.js 20 o superior. Comprueba tu instalación e instala la versión estable:</p>
+          <pre><code class="language-shell">node --version
+npm install -g @google/gemini-cli
+gemini --version</code></pre>
+          <p>Si el último comando no se reconoce, cierra y abre la terminal para actualizar el <code>PATH</code>. Desde la carpeta <code>IATinyFish/</code>, ejecuta <code>gemini</code> y completa el inicio de sesión con tu cuenta de Google cuando se solicite. Para probarlo sin instalarlo de forma permanente puedes ejecutar <code>npx @google/gemini-cli</code>.</p>
+          <aside class="callout note"><b>Instalación segura</b><p>Instala el paquete oficial <code>@google/gemini-cli</code> desde npm. El comando global se ejecuta una sola vez por computadora; no se agrega a <code>package.json</code> ni se incluye en el APK.</p></aside>
+        </section>
+
+        <section>
+          <h2>6. Instala <code>android-cli</code> dentro del proyecto</h2>
           <p>Desde la raíz de <code>IATinyFish</code> ejecuta:</p>
           <pre><code class="language-shell">android skills add --project=.</code></pre>
           <p>Al omitir un nombre y <code>--all</code>, Android CLI instala la skill base <code>android-cli</code>. La instalación de este proyecto debe producir:</p>
@@ -303,11 +313,11 @@ android info</code></pre>
             <li><code>skills-lock.json</code> registra el origen <code>android/skills</code>, la ruta de la skill y su hash.</li>
             <li>La carpeta puede versionarse para que todos los participantes utilicen el mismo procedimiento.</li>
           </ul>
-          <aside class="callout note"><b>Este repositorio ya la incluye</b><p>Si descargaste el proyecto completo y ambos archivos existen, no vuelvas a instalarla. Revisa el contenido y pasa directamente a la verificación con Gemini.</p></aside>
+          <aside class="callout note"><b>Una sola instalación</b><p>Si ya ejecutaste el comando y ambos archivos existen, no lo repitas. Revisa el contenido y pasa directamente a la verificación con Gemini.</p></aside>
         </section>
 
         <section>
-          <h2>6. Activa y verifica la skill en Gemini CLI</h2>
+          <h2>7. Activa y verifica la skill en Gemini CLI</h2>
           <p>Gemini CLI descubre skills del workspace en <code>.gemini/skills</code> y también acepta <code>.agents/skills</code> como alias compartido. Inicia Gemini desde la raíz del proyecto:</p>
           <pre><code class="language-shell">gemini</code></pre>
           <p>Dentro de la sesión interactiva ejecuta:</p>
@@ -329,7 +339,7 @@ No instales ni elimines componentes sin pedirme autorización.</code></pre>
         </section>
 
         <section>
-          <h2>7. Actualiza o audita la instalación</h2>
+          <h2>8. Actualiza o audita la instalación</h2>
           <pre><code class="language-shell">android skills update android-cli
 gemini skills list</code></pre>
           <p>Antes de actualizar, revisa los cambios de <code>SKILL.md</code>, referencias y hash. No aceptes instrucciones para revelar secretos, modificar archivos ajenos al proyecto o ejecutar comandos destructivos.</p>
@@ -337,18 +347,17 @@ gemini skills list</code></pre>
         </section>
 
         <section>
-          <h2>8. Crea un emulador</h2>
-          <ol>
-            <li>Abre <b>Tools → Device Manager</b>.</li>
-            <li>Selecciona <b>Create virtual device</b> y un perfil de teléfono.</li>
-            <li>Elige una imagen API 36 o posterior.</li>
-            <li>Finaliza, inicia el dispositivo y espera a ver la pantalla de inicio.</li>
-          </ol>
-          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p><code>./gradlew --version</code> termina sin error y el emulador aparece encendido en Device Manager.</p></div></div>
+          <h2>9. Conecta un dispositivo para las pruebas</h2>
+          <p>Este paso es opcional hasta que ejecutes la app o una prueba instrumentada. Elige una sola alternativa:</p>
+          <ul>
+            <li><b>Teléfono físico:</b> activa la depuración USB, conecta el dispositivo y acepta la autorización cuando Android la solicite.</li>
+            <li><b>Emulador:</b> abre <b>Tools → Device Manager</b>, crea un dispositivo virtual e inicia una imagen API 23 o superior.</li>
+          </ul>
+          <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p><code>./gradlew --version</code> termina sin error. Cuando vayas a ejecutar la app, Android Studio muestra un teléfono físico autorizado o un emulador encendido.</p></div></div>
         </section>
 
         <section>
-          <h2>9. Estructura que construiremos</h2>
+          <h2>10. Estructura que construiremos</h2>
           <pre><code class="language-text">IATinyFish/
 ├── app/
 │   └── src/main/java/com/apps/iatinyfish/
@@ -447,7 +456,7 @@ android {
 
     defaultConfig {
         applicationId = "com.apps.iatinyfish"
-        minSdk = 36
+        minSdk = 23
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
@@ -493,7 +502,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 }</code></pre>
           <aside class="callout info"><b>Por qué usamos Retrofit y Gson</b><p>Esta versión coincide con la app actual: Retrofit declara el contrato HTTP, Gson convierte JSON a DTO y OkHttp aplica los tiempos máximos. Separar contrato, transporte y mapeo reduce código manual y facilita sustituir la API en pruebas.</p></aside>
-          <aside class="callout note"><b>Compatibilidad del laboratorio</b><p><code>minSdk 36</code> reproduce exactamente la instantánea actual y requiere un emulador o dispositivo Android 16 o posterior. La app no depende de una API exclusiva de 36: para un taller con más dispositivos puedes bajar a API 24 o 26, volver a sincronizar y comprobar el comportamiento. Instala <code>compileSdk 37</code> desde SDK Manager; si aún no está disponible en tu entorno, usa un conjunto AGP/SDK compatible en todos los archivos, sin mezclar versiones.</p></aside>
+          <aside class="callout note"><b>Compatibilidad del laboratorio</b><p><code>minSdk 23</code> es suficiente para las APIs usadas por esta app y permite instalarla en Android 6.0 o posterior, ya sea en un emulador o en un dispositivo físico. <code>compileSdk 37</code> solo se necesita para compilar en tu computadora; instálalo desde SDK Manager. Si no está disponible en tu entorno, usa un conjunto de AGP/SDK compatible en todos los archivos, sin mezclar versiones.</p></aside>
         </section>
 
         <section>
@@ -887,7 +896,7 @@ class MainActivity : ComponentActivity() {
         <span class="track-badge android">BLOQUE ANDROID · 5 DE 5</span>
         <h1>Construir la interfaz con Jetpack Compose</h1>
         <p class="lead">TinyPrice alterna entre búsqueda y detalle, y dentro de la búsqueda representa inicio, carga, vacío y resultados. Construiremos la pantalla con componentes pequeños.</p>
-        <div class="work-context"><b>Dónde trabajar</b><p>Escribe los archivos de <code>ui/theme/</code> y <code>presentation/deals/</code> en Android Studio. Después compila desde la terminal de <code>IATinyFish/</code> y usa un emulador para interactuar con la app. Verás datos de demostración porque la función de Supabase todavía no está desplegada.</p></div>
+        <div class="work-context"><b>Dónde trabajar</b><p>Escribe los archivos de <code>ui/theme/</code> y <code>presentation/deals/</code> en Android Studio. Después compila desde la terminal de <code>IATinyFish/</code> y usa un emulador o un teléfono físico para interactuar con la app. Verás datos de demostración porque la función de Supabase todavía no está desplegada.</p></div>
 
         <section>
           <h2>1. Define el tema oceánico</h2>
@@ -1091,7 +1100,7 @@ KeyboardActions(onSearch = { onEvent(DealsEvent.SubmitSearch) })</code></pre>
 
         <section>
           <h2>7. Ejecuta la demo local</h2>
-          <p>Este es el cierre del bloque Android. El comando crea un APK de depuración a partir de los archivos que acabas de escribir. Después usa <b>Run</b> en Android Studio para instalarlo en el emulador que preparaste. Que aparezcan tiendas y precios ficticios es el resultado esperado en esta fase.</p>
+          <p>Este es el cierre del bloque Android. El comando crea un APK de depuración a partir de los archivos que acabas de escribir. Después usa <b>Run</b> en Android Studio para instalarlo en el teléfono físico o emulador que conectaste. Que aparezcan tiendas y precios ficticios es el resultado esperado en esta fase.</p>
           <pre><code class="language-shell">./gradlew :app:assembleDebug</code></pre>
           <p>Ejecuta desde Android Studio, toca la sugerencia “Nintendo Switch OLED”, abre una tarjeta y vuelve con el botón del sistema.</p>
           <div class="checkpoint"><span>✓</span><div><b>Checkpoint</b><p>Ves datos de demostración, la navegación al detalle funciona y la UI se adapta al tema claro/oscuro. La etiqueta debe dejar claro que aún no son resultados web.</p></div></div>
@@ -1617,7 +1626,7 @@ console.log("search completed", {
         <span class="track-badge android">INTEGRACIÓN ANDROID ↔ SUPABASE</span>
         <h1>Conectar la app al endpoint alojado</h1>
         <p class="lead">Con el backend ya verificado, activa <code>RemoteDealsRepository</code> al compilar y entrega la base de la URL de Supabase.</p>
-        <div class="work-context"><b>Dónde trabajar</b><p>Vuelve a la terminal de <code>IATinyFish/</code> para compilar con las propiedades remotas. Después abre Android Studio y ejecuta la app en el emulador. Si necesitas revisar una petición, consulta las invocaciones en el Dashboard de Supabase. En este paso no copies la clave de TinyFish al proyecto Android.</p></div>
+        <div class="work-context"><b>Dónde trabajar</b><p>Vuelve a la terminal de <code>IATinyFish/</code> para compilar con las propiedades remotas. Después abre Android Studio y ejecuta la app en un teléfono físico o emulador. Si necesitas revisar una petición, consulta las invocaciones en el Dashboard de Supabase. En este paso no copies la clave de TinyFish al proyecto Android.</p></div>
 
         <section>
           <h2>1. Compila con propiedades remotas</h2>
@@ -1668,7 +1677,7 @@ edgeRuntimeBaseUrl=https://YOUR_PROJECT_REF.supabase.co/functions/v1</code></pre
         <span class="track-badge verify">CALIDAD Y DIAGNÓSTICO</span>
         <h1>Probar por capas y resolver fallos</h1>
         <p class="lead">Cuando algo falla, prueba desde la dependencia más externa hacia la UI. Así sabrás qué capa reparar sin cambiar varias cosas a la vez.</p>
-        <div class="work-context"><b>Dónde trabajar</b><p>Usa la terminal de <code>IATinyFish/</code> para las pruebas de compilación y los tests locales; usa el emulador para pruebas de interfaz; consulta <b>Edge Functions → Invocations/Logs</b> en el Dashboard para errores del backend. La matriz de abajo te ayuda a elegir el primer lugar donde mirar según el síntoma.</p></div>
+        <div class="work-context"><b>Dónde trabajar</b><p>Usa la terminal de <code>IATinyFish/</code> para las pruebas de compilación y los tests locales; usa un teléfono físico o emulador para pruebas de interfaz; consulta <b>Edge Functions → Invocations/Logs</b> en el Dashboard para errores del backend. La matriz de abajo te ayuda a elegir el primer lugar donde mirar según el síntoma.</p></div>
 
         <section>
           <h2>Matriz de diagnóstico</h2>
@@ -1731,7 +1740,7 @@ class DealsViewModelTest {
     }
 }</code></pre>
           <pre><code class="language-shell">./gradlew :app:connectedDebugAndroidTest</code></pre>
-          <aside class="callout note"><b>Ejecuta en un emulador</b><p>Los tests de Compose instrumentados necesitan un dispositivo conectado. Los tests del ViewModel se ejecutan localmente y no necesitan Android.</p></aside>
+          <aside class="callout note"><b>Ejecuta en un dispositivo conectado</b><p>Los tests de Compose instrumentados funcionan con un teléfono físico autorizado o con un emulador encendido. Los tests del ViewModel se ejecutan localmente y no necesitan Android.</p></aside>
         </section>
 
         <section>
@@ -1755,7 +1764,7 @@ class DealsViewModelTest {
   -PedgeRuntimeBaseUrl=https://YOUR_PROJECT_REF.supabase.co/functions/v1
 
 ./gradlew :app:testDebugUnitTest</code></pre>
-          <p>Si cambiaste dependencias, ejecuta también los tests instrumentados en un emulador antes de publicar.</p>
+          <p>Si cambiaste dependencias, ejecuta también los tests instrumentados en un teléfono físico o emulador antes de publicar.</p>
         </section>
 
         <section>
